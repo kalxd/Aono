@@ -7,7 +7,8 @@ Quisque pellentesque dignissim felis, egestas tempus urna luctus vitae. In hac
 habitasse platea dictumst. Morbi fringilla mattis odio, et mattis tellus
 accumsan vitae.
 
-2. Interdum nex magna.
+1. 同时我们依然需要支持中文
+2. Interdum nex magna. 你说对吗？
 
 Vivamus eget mauris sit amet nulla laoreet lobortis. Nulla in diam elementum
 risus convallis commodo. Cras vehicula varius dui vitae facilisis. Proin
