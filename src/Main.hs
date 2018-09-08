@@ -1,12 +1,11 @@
---------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import XG.Type
+import Config
 
-
---------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith (combineConfig config) $ do
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
