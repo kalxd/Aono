@@ -1,8 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import XG.Type
 import Config
+
+postPattern :: Pattern
+postPattern = fromGlob $ sitePostDir config <> "/*"
 
 main :: IO ()
 main = hakyllWith (combineConfig config) $ do
@@ -10,9 +13,10 @@ main = hakyllWith (combineConfig config) $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*" $ do
+    match "css/theme.css" $ do
         route   idRoute
-        compile compressCssCompiler
+        -- compile compressCssCompiler
+        compile copyFileCompiler
 
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
@@ -20,7 +24,7 @@ main = hakyllWith (combineConfig config) $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
-    match "posts/*" $ do
+    match postPattern $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
@@ -30,7 +34,7 @@ main = hakyllWith (combineConfig config) $ do
     create ["archive.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- recentFirst =<< loadAll postPattern
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Archives"            `mappend`
@@ -45,7 +49,7 @@ main = hakyllWith (combineConfig config) $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- recentFirst =<< loadAll postPattern
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
@@ -59,7 +63,6 @@ main = hakyllWith (combineConfig config) $ do
     match "templates/*" $ compile templateBodyCompiler
 
 
---------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
