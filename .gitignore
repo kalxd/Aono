@@ -3,3 +3,6 @@ _site/
 .stack-work/
 
 src/Config.hs
+
+image/
+wfvh/

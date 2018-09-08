@@ -3,6 +3,7 @@ module XG.Type where
 import Hakyll.Core.Configuration
 import System.Random
 import Data.Maybe
+import Data.Char (toLower)
 
 data Kimochi = Ureshi -- 高兴
              | Hutsuu -- 普通
@@ -20,6 +21,8 @@ instance Random Kimochi where
 randomKimochi :: IO Kimochi
 randomKimochi = randomIO
 
+toCSSName :: Kimochi -> String
+toCSSName = (++ ".css") . map toLower . show
 
 data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , siteHost :: Maybe String -- 开发地址

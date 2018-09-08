@@ -7,60 +7,49 @@ import Config
 postPattern :: Pattern
 postPattern = fromGlob $ sitePostDir config <> "/*"
 
-main :: IO ()
-main = hakyllWith (combineConfig config) $ do
-    match "images/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+copyProcess :: Rules ()
+copyProcess = route idRoute >> compile copyFileCompiler
 
-    match "css/theme.css" $ do
-        route   idRoute
-        -- compile compressCssCompiler
-        compile copyFileCompiler
+imageRoute :: Rules ()
+imageRoute = match "image/**" copyProcess
 
-    match (fromList ["about.rst", "contact.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+cssRoute :: Pattern -> Rules()
+cssRoute pat = match pat copyProcess
 
-    match postPattern $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+postRoute :: Pattern -> Rules ()
+postRoute pat = match pat $ do
+    route $ setExtension "html"
+    compile $ do
+        pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html" postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    create ["archive.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll postPattern
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
-                    defaultContext
+indexRoute :: Rules ()
+indexRoute = match "index.html" $ do
+    route idRoute
+    compile $ do
+        posts <- recentFirst =<< loadAll postPattern
+        let ctx = listField "posts" postCtx (return posts)
+                  <> constField "title" "首页"
+                  <> defaultContext
+        getResourceBody
+            >>= applyAsTemplate ctx
+            >>= loadAndApplyTemplate "templates/default.html" ctx
+            >>= relativizeUrls
 
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+templateRoute :: Rules ()
+templateRoute = match "templates/*" $ compile templateBodyCompiler
 
-
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll postPattern
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
-                    defaultContext
-
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
-
-    match "templates/*" $ compile templateBodyCompiler
+main :: IO ()
+main = do
+    kimochi <- randomKimochi
+    hakyllWith (combineConfig config) $ do
+        imageRoute
+        cssRoute $ fromGlob $ "css/" <> toCSSName kimochi
+        postRoute postPattern
+        indexRoute
+        templateRoute
 
 
 postCtx :: Context String
