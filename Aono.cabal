@@ -13,4 +13,5 @@ executable site
   ghc-options:      -threaded
   default-language: Haskell2010
   other-modules:    XG.Type
+                  , XG.Route
                   , Config
