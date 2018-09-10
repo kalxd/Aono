@@ -2,6 +2,7 @@
 module XG.Route where
 
 import Hakyll
+import Text.Pandoc.Options (WriterOptions(..))
 
 import Data.Monoid ((<>))
 import Control.Monad ((>=>))
@@ -27,7 +28,14 @@ postRoute :: Pattern -> Rules ()
 postRoute pat = match pat $ do
     route $ setExtension "html"
     compile $ do
-        pandocCompiler
+        toc <- flip getMetadataField "toc" =<< getUnderlying
+        let writeSet = case fmap read toc :: Maybe Int of
+                Just n -> defaultHakyllWriterOptions { writerTableOfContents = True
+                                                     , writerTOCDepth = n
+                                                     , writerTemplate = Just "$toc$\n$body$"
+                                                     }
+                Nothing -> defaultHakyllWriterOptions
+        pandocCompilerWith defaultHakyllReaderOptions writeSet
             >>= loadAndApplyTemplate "tpl/wfvh.html" defaultContext
             >>= applyLayout defaultContext
 
