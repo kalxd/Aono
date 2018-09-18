@@ -19,8 +19,8 @@ copyProcess = route idRoute >> compile copyFileCompiler
 imageRoute :: Rules ()
 imageRoute = match "image/**" copyProcess
 
-cssRoute :: Pattern -> Rules()
-cssRoute pat = match pat $ do
+cssRoute :: Rules()
+cssRoute = match "css/*" $ do
     route idRoute
     compile compressCssCompiler
 

@@ -9,7 +9,7 @@ main = do
     kimochi <- randomKimochi
     hakyllWith (combineConfig config) $ do
         imageRoute
-        cssRoute $ fromGlob $ "css/" <> toCSSName kimochi
+        cssRoute
         postRoute postPattern
         indexRoute
         templateRoute

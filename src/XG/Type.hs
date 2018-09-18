@@ -21,8 +21,8 @@ instance Random Kimochi where
 randomKimochi :: IO Kimochi
 randomKimochi = randomIO
 
-toCSSName :: Kimochi -> String
-toCSSName = (++ ".css") . map toLower . show
+showKimochi :: Kimochi -> String
+showKimochi = map toLower . show
 
 data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , siteHost :: Maybe String -- 开发地址
