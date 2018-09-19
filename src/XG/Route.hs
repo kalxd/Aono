@@ -24,8 +24,8 @@ cssRoute = match "css/*" $ do
     route idRoute
     compile compressCssCompiler
 
-postRoute :: Pattern -> Rules ()
-postRoute pat = match pat $ do
+postRoute :: Kimochi -> Pattern -> Rules ()
+postRoute kimochi pat = match pat $ do
     route $ setExtension "html"
     compile $ do
         toc <- flip getMetadataField "toc" =<< getUnderlying
@@ -35,9 +35,10 @@ postRoute pat = match pat $ do
                                                      , writerTemplate = Just "$toc$\n$body$"
                                                      }
                 Nothing -> defaultHakyllWriterOptions
+        let ctx = pageCtx kimochi
         pandocCompilerWith defaultHakyllReaderOptions writeSet
-            >>= loadAndApplyTemplate "tpl/wfvh.html" defaultContext
-            >>= applyLayout defaultContext
+            >>= loadAndApplyTemplate "tpl/wfvh.html" ctx
+            >>= applyLayout ctx
 
 indexRoute :: Kimochi -> Rules ()
 indexRoute kimochi = create ["index.html"] $ do

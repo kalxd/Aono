@@ -10,6 +10,6 @@ main = do
     hakyllWith (combineConfig config) $ do
         imageRoute
         cssRoute
-        postRoute postPattern
+        postRoute kimochi postPattern
         indexRoute kimochi
         templateRoute
