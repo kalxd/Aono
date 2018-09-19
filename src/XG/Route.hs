@@ -39,14 +39,16 @@ postRoute pat = match pat $ do
             >>= loadAndApplyTemplate "tpl/wfvh.html" defaultContext
             >>= applyLayout defaultContext
 
-indexRoute :: Rules ()
-indexRoute = create ["index.html"] $ do
+indexRoute :: Kimochi -> Rules ()
+indexRoute kimochi = create ["index.html"] $ do
     route idRoute
     compile $ do
         posts <- recentFirst =<< loadAll postPattern
-        let ctx = listField "posts" postCtx (return posts)
-                  <> constField "title" "首页"
-                  <> defaultContext
+        let ctx = mconcat [ pageCtx kimochi
+                          , listField "posts" defaultContext (return posts)
+                          , constField "title" "首页"
+                          , defaultContext
+                          ]
         makeItem ""
             >>= loadAndApplyTemplate "tpl/index.html" ctx
             >>= applyLayout ctx
@@ -58,5 +60,9 @@ templateRoute = match "tpl/*" $ compile templateBodyCompiler
 applyLayout :: Context a -> Item a -> Compiler (Item String)
 applyLayout ctx = loadAndApplyTemplate "tpl/layout.html" ctx >=> relativizeUrls
 
-postCtx :: Context String
-postCtx = dateField "date" "%B %e, %Y" <> defaultContext
+-- | 附加其它信息
+pageCtx :: Kimochi -> Context String
+pageCtx kimochi = mconcat [ dateField "date" "%B %e, %Y"
+                          , constField "theme" $ showKimochi kimochi
+                          , defaultContext
+                          ]

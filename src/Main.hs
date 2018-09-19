@@ -11,5 +11,5 @@ main = do
         imageRoute
         cssRoute
         postRoute postPattern
-        indexRoute
+        indexRoute kimochi
         templateRoute

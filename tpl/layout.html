@@ -5,7 +5,11 @@
     <title>$title$</title>
 </head>
 <body>
-    <header></header>
+    <header>
+        $if(theme)$
+            <p>$theme$</p>
+        $endif$
+    </header>
     <main>$body$</main>
     <footer>footer</footer>
 </body>
