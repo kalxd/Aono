@@ -2,7 +2,7 @@ _cache/
 _site/
 .stack-work/
 
-src/Config.hs
-
 image/
 wfvh/
+
+config.yml

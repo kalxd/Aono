@@ -2,11 +2,11 @@
 import Hakyll
 import XG.Type
 import XG.Route
-import Config
 
 main :: IO ()
 main = do
-    hakyllWith (combineConfig config) $ do
+    config <- loadConfig
+    hakyllWith (applyHakyllConfig config) $ do
         imageRoute
         cssRoute
         postRoute postPattern

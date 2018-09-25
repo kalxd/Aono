@@ -8,10 +8,9 @@ import Data.Monoid ((<>))
 import Control.Monad ((>=>))
 
 import XG.Type
-import Config
 
 postPattern :: Pattern
-postPattern = fromGlob $ sitePostDir config <> "/**.org"
+postPattern = "wfvh/**"
 
 copyProcess :: Rules ()
 copyProcess = route idRoute >> compile copyFileCompiler
