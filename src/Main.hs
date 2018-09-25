@@ -6,10 +6,9 @@ import Config
 
 main :: IO ()
 main = do
-    kimochi <- randomKimochi
     hakyllWith (combineConfig config) $ do
         imageRoute
         cssRoute
-        postRoute kimochi postPattern
-        indexRoute kimochi
+        postRoute postPattern
+        indexRoute
         templateRoute

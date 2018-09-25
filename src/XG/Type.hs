@@ -1,28 +1,7 @@
 module XG.Type where
 
 import Hakyll.Core.Configuration
-import System.Random
 import Data.Maybe
-import Data.Char (toLower)
-
-data Kimochi = Ureshi -- 高兴
-             | Hutsuu -- 普通
-             | Kanashii -- 悲伤
-             deriving (Enum, Show)
-
-instance Random Kimochi where
-    randomR (x, y) g = (toEnum i, g')
-        where pair = (fromEnum x, fromEnum y)
-              (i, g') = randomR pair g
-
-    random g = (toEnum r, g')
-        where (r, g') = randomR (0, 2) g
-
-randomKimochi :: IO Kimochi
-randomKimochi = randomIO
-
-showKimochi :: Kimochi -> String
-showKimochi = map toLower . show
 
 data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , siteHost :: Maybe String -- 开发地址

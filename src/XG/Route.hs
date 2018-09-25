@@ -24,8 +24,8 @@ cssRoute = match "css/*" $ do
     route idRoute
     compile compressCssCompiler
 
-postRoute :: Kimochi -> Pattern -> Rules ()
-postRoute kimochi pat = match pat $ do
+postRoute :: Pattern -> Rules ()
+postRoute pat = match pat $ do
     route $ setExtension "html"
     compile $ do
         toc <- flip getMetadataField "toc" =<< getUnderlying
@@ -35,18 +35,17 @@ postRoute kimochi pat = match pat $ do
                                                      , writerTemplate = Just "$toc$\n$body$"
                                                      }
                 Nothing -> defaultHakyllWriterOptions
-        let ctx = pageCtx kimochi
+        let ctx = pageCtx
         pandocCompilerWith defaultHakyllReaderOptions writeSet
             >>= loadAndApplyTemplate "tpl/wfvh.html" ctx
             >>= applyLayout ctx
 
-indexRoute :: Kimochi -> Rules ()
-indexRoute kimochi = create ["index.html"] $ do
+indexRoute :: Rules ()
+indexRoute = create ["index.html"] $ do
     route idRoute
     compile $ do
         posts <- recentFirst =<< loadAll postPattern
-        let ctx = mconcat [ pageCtx kimochi
-                          , listField "posts" defaultContext (return posts)
+        let ctx = mconcat [ listField "posts" pageCtx (return posts)
                           , constField "title" "首页"
                           , defaultContext
                           ]
@@ -62,8 +61,7 @@ applyLayout :: Context a -> Item a -> Compiler (Item String)
 applyLayout ctx = loadAndApplyTemplate "tpl/layout.html" ctx >=> relativizeUrls
 
 -- | 附加其它信息
-pageCtx :: Kimochi -> Context String
-pageCtx kimochi = mconcat [ dateField "date" "%B %e, %Y"
-                          , constField "theme" $ showKimochi kimochi
-                          , defaultContext
-                          ]
+pageCtx :: Context String
+pageCtx = mconcat [ dateField "date" "%B %e, %Y"
+                  , defaultContext
+                  ]
