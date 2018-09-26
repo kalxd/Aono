@@ -12,16 +12,28 @@ data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , sitePostDir :: FilePath -- 文章目录
                              } deriving (Show)
 
+defSiteConfig :: SiteConfig
+defSiteConfig = SiteConfig { siteTitle = "我的网站"
+                           , siteHost = previewHost defaultConfiguration
+                           , sitePort = previewPort defaultConfiguration
+                           , siteSource = Nothing
+                           , sitePostDir = "posts"
+                           }
+
 instance FromJSON SiteConfig where
     parseJSON = withObject "config" $ \v -> SiteConfig
-                                            <$> v .:? "title" .!= "我的网站"
-                                            <*> v .:? "host" .!= previewHost defaultConfiguration
-                                            <*> v .:? "port" .!= previewPort defaultConfiguration
+                                            <$> v .:? "title" .!= siteTitle defSiteConfig
+                                            <*> v .:? "host" .!= siteHost defSiteConfig
+                                            <*> v .:? "port" .!= sitePort defSiteConfig
                                             <*> v .:? "source"
-                                            <*> v .:? "postdir" .!= "posts"
+                                            <*> v .:? "postdir" .!= sitePostDir defSiteConfig
 
 loadConfig :: IO SiteConfig
-loadConfig = decodeFileThrow "config.yml"
+loadConfig = do
+    c <- decodeFileEither "config.yml"
+    case c of
+        Left _ -> return defSiteConfig
+        Right a -> return a
 
 applyHakyllConfig :: SiteConfig -> Configuration
 applyHakyllConfig config = defaultConfiguration { previewHost = host
