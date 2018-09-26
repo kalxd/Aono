@@ -2,6 +2,8 @@
 module XG.Type where
 
 import Hakyll.Core.Configuration
+import Hakyll.Core.Rules
+import Control.Monad.Trans.Reader
 import Data.Yaml
 import Data.Maybe
 
@@ -41,3 +43,5 @@ applyHakyllConfig config = defaultConfiguration { previewHost = host
                                                 }
     where host = siteHost config
           port = sitePort config
+
+type RouteRule = ReaderT SiteConfig IO (Rules ())
