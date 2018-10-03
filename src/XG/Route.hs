@@ -29,7 +29,7 @@ toListItem xs = return $ do
 readMenu :: RouteEnv [String]
 readMenu = do
     dirPath <- asks sitePostDir
-    dirs <- lift $ listDirectory dirPath
+    dirs <- lift $ sort $ listDirectory dirPath
     filterM (lift . doesDirectoryExist . (dirPath </>)) dirs
 
 -- | 模板需要用到的全部变量都在这里
