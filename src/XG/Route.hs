@@ -3,21 +3,51 @@ module XG.Route where
 
 import Hakyll
 import Text.Pandoc.Options (WriterOptions(..))
+import System.Directory (listDirectory, doesDirectoryExist)
+import System.FilePath.Posix ((</>))
 
 import Text.Read (readMaybe)
 import Data.Monoid ((<>))
+import Data.List (sort)
 import Control.Monad.Trans.Reader
-import Control.Monad ((>=>))
+import Control.Monad.Trans.Class (lift)
+import Control.Monad ((>=>), filterM)
 
 import XG.Type
 
 type RouteEnv a = ReaderT SiteConfig IO a
 type RouteRule = RouteEnv (Rules ())
 
+-- | 路径转化成列表
+toListItem :: [String] -> Compiler [Item String]
+toListItem xs = return $ do
+    x <- xs
+    let p = fromFilePath x
+    return $ Item p x
+
+-- | 读取菜单路径
+readMenu :: RouteEnv [String]
+readMenu = do
+    dirPath <- asks sitePostDir
+    dirs <- lift $ listDirectory dirPath
+    filterM (lift . doesDirectoryExist . (dirPath </>)) dirs
+
+-- | 模板需要用到的全部变量都在这里
+globalCtx :: RouteEnv (Context String)
+globalCtx = do
+    config <- ask
+    dirs <- readMenu
+
+    return $ mconcat [ constField "title" $ siteTitle config
+                     , listField "menu" defaultContext $ toListItem dirs
+                     , defaultContext
+                     ]
+
 routeRule :: RouteRule
 routeRule = do
     postDir <- asks sitePostDir
     title <- asks siteTitle
+    gctx <- globalCtx
 
     let postPattern = fromGlob $ postDir <> "/**"
     return $ do
@@ -36,7 +66,7 @@ routeRule = do
                                                              , writerTemplate = Just "$toc$\n$body$"
                                                              }
                         Nothing -> defaultHakyllWriterOptions
-                let ctx = pageCtx
+                let ctx = pageCtx <> gctx
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
                     >>= loadAndApplyTemplate "tpl/wfvh.html" ctx
                     >>= applyLayout ctx
@@ -47,7 +77,7 @@ routeRule = do
                 postAry <- recentFirst =<< loadAll postPattern
                 let ctx = mconcat [ listField "postAry" pageCtx (return postAry)
                                   , constField "title" "首页"
-                                  , defaultContext
+                                  , gctx
                                   ]
                 makeItem ""
                     >>= loadAndApplyTemplate "tpl/index.html" ctx
