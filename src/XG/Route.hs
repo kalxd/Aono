@@ -32,6 +32,10 @@ readMenu = do
     dirs <- lift $ sort <$> listDirectory dirPath
     filterM (lift . doesDirectoryExist . (dirPath </>)) dirs
 
+-- | 空元素
+emptyItem :: Compiler (Item String)
+emptyItem = makeItem ""
+
 -- | 模板需要用到的全部变量都在这里
 globalCtx :: RouteEnv (Context String)
 globalCtx = do
@@ -42,6 +46,24 @@ globalCtx = do
                      , listField "menu" defaultContext $ toListItem dirs
                      , defaultContext
                      ]
+
+-- | 载入模板
+applyLayout :: Context a -> Item a -> Compiler (Item String)
+applyLayout ctx = loadAndApplyTemplate "tpl/layout.html" ctx >=> relativizeUrls
+
+-- | 渲染出最终模板
+renderTpl :: Identifier -> Context String -> Item String -> Compiler (Item String)
+renderTpl tpl ctx = loadAndApplyTemplate tpl ctx >=> applyLayout ctx
+
+-- | 从空模板开始渲染
+renderFromEmpty :: Identifier -> Context String -> Compiler (Item String)
+renderFromEmpty tpl ctx = emptyItem >>= renderTpl tpl ctx
+
+-- | 附加其它信息
+pageCtx :: Context String
+pageCtx = mconcat [ dateField "date" "%B %e, %Y"
+                  , defaultContext
+                  ]
 
 routeRule :: RouteRule
 routeRule = do
@@ -57,6 +79,18 @@ routeRule = do
         -- css route
         match "css/*" $ route idRoute >> compile compressCssCompiler
 
+        -- 猫类
+        cats <- buildCategories postPattern $ fromCapture "猫/*.html"
+        tagsRules cats $ \cat p -> do
+            route idRoute
+            compile $ do
+                postAry <- recentFirst =<< loadAll p
+                let ctx = mconcat [ listField "postAry" pageCtx $ return postAry
+                                  , constField "title" $ "分类：" <> cat
+                                  , gctx
+                                  ]
+                renderFromEmpty "tpl/cat.html" ctx
+
         -- post route
         match postPattern $ do
             route $ setExtension "html"
@@ -68,10 +102,9 @@ routeRule = do
                                                              , writerTemplate = Just "$toc$\n$body$"
                                                              }
                         Nothing -> defaultHakyllWriterOptions
-                let ctx = pageCtx <> gctx
+                let ctx = categoryField "cats" cats <> gctx
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
-                    >>= loadAndApplyTemplate "tpl/wfvh.html" ctx
-                    >>= applyLayout ctx
+                    >>= renderTpl "tpl/wfvh.html" ctx
 
         -- index route
         create ["index.html"] $ do
@@ -82,9 +115,7 @@ routeRule = do
                                   , constField "title" "首页"
                                   , gctx
                                   ]
-                makeItem ""
-                    >>= loadAndApplyTemplate "tpl/index.html" ctx
-                    >>= applyLayout ctx
+                renderFromEmpty "tpl/index.html" ctx
 
         -- template
         match "tpl/*" $ compile templateCompiler
@@ -92,13 +123,3 @@ routeRule = do
 
 runRoute :: SiteConfig -> IO (Rules ())
 runRoute = runReaderT routeRule
-
--- | 载入模板
-applyLayout :: Context a -> Item a -> Compiler (Item String)
-applyLayout ctx = loadAndApplyTemplate "tpl/layout.html" ctx >=> relativizeUrls
-
--- | 附加其它信息
-pageCtx :: Context String
-pageCtx = mconcat [ dateField "date" "%B %e, %Y"
-                  , defaultContext
-                  ]
