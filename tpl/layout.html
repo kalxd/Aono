@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
 	<title>$title$</title>
+	<link rel="stylesheet" href="/css/aono.css">
 </head>
 <body>
-	<main>$body$</main>
+	<main class="aono main container">
+		<header>
+			<h1>$siteTitle$</h1>
+		</header>
+		<nav>
+			<ul>
+				<li><a href="/">首页</a></li>
+				$for(menu)$
+					<li><a href="/$title$">$title$</a></li>
+				$endfor$
+			</ul>
+		</nav>
+		$body$
+	</main>
 	<footer>footer</footer>
 </body>
 </html>

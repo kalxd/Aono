@@ -29,7 +29,7 @@ toListItem xs = return $ do
 readMenu :: RouteEnv [String]
 readMenu = do
     dirPath <- asks sitePostDir
-    dirs <- lift $ sort $ listDirectory dirPath
+    dirs <- lift $ sort <$> listDirectory dirPath
     filterM (lift . doesDirectoryExist . (dirPath </>)) dirs
 
 -- | 模板需要用到的全部变量都在这里
@@ -38,7 +38,7 @@ globalCtx = do
     config <- ask
     dirs <- readMenu
 
-    return $ mconcat [ constField "title" $ siteTitle config
+    return $ mconcat [ constField "siteTitle" $ siteTitle config
                      , listField "menu" defaultContext $ toListItem dirs
                      , defaultContext
                      ]
@@ -53,8 +53,10 @@ routeRule = do
     return $ do
         -- image route
         match "image/**" $ route idRoute >> compile copyFileCompiler
+
         -- css route
         match "css/*" $ route idRoute >> compile compressCssCompiler
+
         -- post route
         match postPattern $ do
             route $ setExtension "html"
@@ -70,6 +72,7 @@ routeRule = do
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
                     >>= loadAndApplyTemplate "tpl/wfvh.html" ctx
                     >>= applyLayout ctx
+
         -- index route
         create ["index.html"] $ do
             route idRoute
@@ -82,6 +85,7 @@ routeRule = do
                 makeItem ""
                     >>= loadAndApplyTemplate "tpl/index.html" ctx
                     >>= applyLayout ctx
+
         -- template
         match "tpl/*" $ compile templateCompiler
 
