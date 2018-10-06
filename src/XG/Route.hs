@@ -69,6 +69,7 @@ routeRule :: RouteRule
 routeRule = do
     postDir <- asks sitePostDir
     title <- asks siteTitle
+
     gctx <- globalCtx
 
     let postPattern = fromGlob $ postDir <> "/**"
@@ -116,6 +117,17 @@ routeRule = do
                                   , gctx
                                   ]
                 renderFromEmpty "tpl/index.html" ctx
+
+        -- rss
+        create ["rss.xml"] $ do
+            route idRoute
+            compile $ do
+                let config = FeedConfiguration title "" "" "" "http://abc.com"
+                let ctx = mconcat [ constField "description" ""
+                                  , gctx
+                                  ]
+                posts <- fmap (take 10) . recentFirst =<< loadAll postPattern
+                renderRss config ctx posts
 
         -- template
         match "tpl/*" $ compile templateCompiler
