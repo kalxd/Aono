@@ -1,11 +1,10 @@
-<ol>
-	$for(postAry)$
-		<li><a href="$url$">$title$</a></li>
-	$endfor$
-</ol>
-
-<div>
-	$for(menu)$
-		<p>$url$ - $title$</p>
-	$endfor$
-</div>
+<article class="aono main section">
+	<header class="header">近期博文</header>
+	<section>
+		<ol>
+			$for(postAry)$
+			<li><a href="$url$">$title$</a></li>
+			$endfor$
+		</ol>
+	</section>
+</article>

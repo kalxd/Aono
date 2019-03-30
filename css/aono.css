@@ -1,8 +1,104 @@
 :root {
+	--normal-font-color: #08002a;
+	--link-color: #234b7e;
+	--active-color: #633341;
+	--border-color: #0f0c37;
 }
 
 *,
 *:before,
 *:after {
 	box-sizing: border-box;
+}
+
+body {
+	background-color: #f4fefd;
+	color: var(--normal-font-color);
+}
+
+a {
+	text-decoration: none;
+	color: var(--link-color);
+}
+
+a:hover {
+	color: var(--active-color);
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 1px solid var(--border-color);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table td,
+table th {
+	padding: .4em 1em;
+	border-bottom: 1px solid var(--border-color);
+}
+
+table thead {
+	background-color: #f6f6fe;
+}
+
+table thead th:not(:first-child),
+table tbody td:not(:first-child) {
+	border-left: 1px solid var(--border-color);
+}
+
+table tbody tr:last-child td {
+	border-bottom-width: 0;
+}
+
+blockquote {
+	text-decoration: underline;
+}
+
+.aono.main.container {
+	width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.aono.navi.menu {
+	border-width: 2px 4px;
+	border-color: var(--board-color);
+	border-style: solid double;
+	display: flex;
+}
+
+.aono.navi.menu > ul {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+	list-style: none;
+	display: flex;
+}
+
+.aono.navi.menu .item {
+	padding: .4em 1em;
+	transition: all .3s;
+}
+
+.aono.navi.menu .item:hover {
+	background-color: #d8f1f8;
+}
+
+.aono.navi.menu > .right.item {
+	self-align: right;
+	margin-left: auto;
+}
+
+.aono.segment {
+	border-style: solid double;
+	border-width: 2px 4px;
+	border-color: var(--border-color);
+	padding: 1em;
+	margin-top: 2em;
+}
+
+.aono.segment .right.header {
+	float: right;
 }

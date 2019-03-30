@@ -4,22 +4,27 @@
 	<meta charset="UTF-8">
 	<title>$title$</title>
 	<link rel="stylesheet" href="/css/aono.css">
+	<link rel="stylesheet" href="/css/code.css">
 </head>
 <body>
 	<main class="aono main container">
-		<header>
+		<header class="aono site header">
 			<h1>$siteTitle$</h1>
 		</header>
-		<nav>
+		<nav class="aono navi menu">
 			<ul>
-				<li><a href="/">首页</a></li>
+				<li class="item"><a href="/">首页</a></li>
 				$for(menu)$
-					<li><a href="/猫/$title$.html">$title$</a></li>
+					<li class="item"><a href="/猫/$title$.html">$title$</a></li>
 				$endfor$
 			</ul>
+
+			<a class="right item">RSS订阅</a>
 		</nav>
-		$body$
+
+		<div class="aono segment">
+			$body$
+		</div>
 	</main>
-	<footer>footer</footer>
 </body>
 </html>
