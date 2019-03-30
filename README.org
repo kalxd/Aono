@@ -1,0 +1,17 @@
+* AONO
+
+** 简介
+
+基本[[https://jaspervdj.be/hakyll/][Hakyll]]配置出来的静态博客程度。
+
+** 特色
+
++ 支持[[https://pandoc.org/][pandoc]]语法。
++ 提供ATOM格式订阅。
++ 无任何javascript，终端友好。
+
+** 截图
+
+** 感谢
+
+** 协议
