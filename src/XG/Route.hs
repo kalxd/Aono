@@ -53,7 +53,7 @@ applyLayout ctx = loadAndApplyTemplate "tpl/layout.html" ctx >=> relativizeUrls
 
 -- | 渲染出最终模板
 renderTpl :: Identifier -> Context String -> Item String -> Compiler (Item String)
-renderTpl tpl ctx = loadAndApplyTemplate tpl ctx >=> applyLayout ctx
+renderTpl tpl ctx = loadAndApplyTemplate tpl ctx >=> saveSnapshot "content" >=> applyLayout ctx
 
 -- | 从空模板开始渲染
 renderFromEmpty :: Identifier -> Context String -> Compiler (Item String)
@@ -69,6 +69,7 @@ routeRule :: RouteRule
 routeRule = do
     postDir <- asks sitePostDir
     title <- asks siteTitle
+    rssConfig <- asks feedConfig
 
     gctx <- globalCtx
 
@@ -120,15 +121,12 @@ routeRule = do
                 renderFromEmpty "tpl/index.html" ctx
 
         -- rss
-        create ["rss.xml"] $ do
+        create ["atom.xml"] $ do
             route idRoute
             compile $ do
-                let config = FeedConfiguration title "" "" "" "http://abc.com"
-                let ctx = mconcat [ constField "description" ""
-                                  , gctx
-                                  ]
+                let ctx = gctx <> bodyField "description"
                 posts <- fmap (take 10) . recentFirst =<< loadAll postPattern
-                renderRss config ctx posts
+                renderAtom rssConfig ctx posts
 
         -- template
         match "tpl/*" $ compile templateCompiler
