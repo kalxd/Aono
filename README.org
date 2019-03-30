@@ -12,8 +12,8 @@
 
 ** 安装使用
 
-1. 安装[[https://docs.haskellstack.org/en/stable/README/][stack。
-2. ]]下载或 =git clone= 代码库。
+1. 安装[[https://docs.haskellstack.org/en/stable/README/][stack。]]
+2. 下载或 =git clone= 代码库。
 3. 制成可执行文件 =aono= ，具体用法跟[[https://jaspervdj.be/hakyll/tutorials/01-installation.html][Hakyll教程一致]]。
 4. config.sample.yml复制或改名成config.yml。
 5. 更改配置（可选）。
