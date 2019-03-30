@@ -97,10 +97,11 @@ routeRule = do
             route $ setExtension "html"
             compile $ do
                 toc <- flip getMetadataField "toc" =<< getUnderlying
+                let tocTpl = "<div class=\"toc\">目录：$toc$</div>$body$"
                 let writeSet = case toc >>= readMaybe :: Maybe Int of
                         Just n -> defaultHakyllWriterOptions { writerTableOfContents = True
                                                              , writerTOCDepth = n
-                                                             , writerTemplate = Just "$toc$\n$body$"
+                                                             , writerTemplate = Just tocTpl
                                                              }
                         Nothing -> defaultHakyllWriterOptions
                 let ctx = categoryField "cats" cats <> gctx

@@ -15,7 +15,7 @@ a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
+pre.sourceCode { margin: 0; padding: 1em; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }

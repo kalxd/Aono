@@ -14,8 +14,10 @@
 body {
 	background-color: #f4fefd;
 	color: var(--normal-font-color);
+	font-family: "方正书宋_GBK";
 }
 
+/* 链接 */
 a {
 	text-decoration: none;
 	color: var(--link-color);
@@ -25,6 +27,7 @@ a:hover {
 	color: var(--active-color);
 }
 
+/* 表格 */
 table {
 	border-collapse: separate;
 	border-spacing: 0;
@@ -52,8 +55,31 @@ table tbody tr:last-child td {
 	border-bottom-width: 0;
 }
 
+/* 引用 */
 blockquote {
+	text-decoration: underline wavy var(--active-color);
+}
+
+/* 粗体 */
+strong {
+	font-family: "方正黑体简体";
+}
+
+/* 所谓的斜体 */
+em {
+	font-family: "方正楷体简体";
+	font-style: normal;
 	text-decoration: underline;
+}
+
+/* 图片 */
+figure {
+	text-align: center;
+}
+
+figure > img {
+	width: auto;
+	max-width: 100%;
 }
 
 .aono.main.container {
@@ -101,4 +127,8 @@ blockquote {
 
 .aono.segment .right.header {
 	float: right;
+}
+
+.aono.segment section > p {
+	text-indent: 2em;
 }
