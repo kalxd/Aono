@@ -105,7 +105,7 @@ figure > img {
 
 .aono.navi.menu .item {
 	padding: .4em 1em;
-	transition: all .3s;
+	transition: color .3s, background-color .3s;
 }
 
 .aono.navi.menu .item:hover {
@@ -123,6 +123,7 @@ figure > img {
 	border-color: var(--border-color);
 	padding: 1em;
 	margin-top: 2em;
+	text-shadow: 0 0 1px hsla(244, 78%, 21%, .2);
 }
 
 .aono.segment .right.header {
@@ -131,4 +132,9 @@ figure > img {
 
 .aono.segment section > p {
 	text-indent: 2em;
+}
+
+.aono.footer {
+	text-align: center;
+	margin-top: 2em;
 }
