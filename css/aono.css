@@ -131,6 +131,13 @@ figure > img {
 	float: right;
 }
 
+.aono.segment .post.list {
+}
+
+.aono.segment .post.list > .item {
+	margin-bottom: 1em;
+}
+
 .aono.segment section > p {
 	text-indent: 2em;
 }
