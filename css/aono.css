@@ -140,6 +140,15 @@ figure > img {
 	color: var(--light-blue);
 }
 
+.aono.article p code {
+	color: hsl(345, 52%, 43%);
+	border-radius: 4px;
+	border: 1px solid var(--border-color);
+	font-family: "Fantasque Sans Mono";
+	padding-left: .5em;
+	padding-right: .5em;
+}
+
 .aono.footer {
 	text-align: center;
 	margin-top: 2em;
