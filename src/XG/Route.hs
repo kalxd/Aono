@@ -61,7 +61,8 @@ renderFromEmpty tpl ctx = emptyItem >>= renderTpl tpl ctx
 
 -- | 附加其它信息
 pageCtx :: Context String
-pageCtx = mconcat [ dateField "date" "%B %e, %Y"
+pageCtx = mconcat [ dateField "date" "%Y年%m月%d日"
+                  , dateField "datetime" "%Y-%m-%d"
                   , defaultContext
                   ]
 
@@ -105,7 +106,7 @@ routeRule = do
                                                              , writerTemplate = Just tocTpl
                                                              }
                         Nothing -> defaultHakyllWriterOptions
-                let ctx = categoryField "cats" cats <> gctx
+                let ctx = categoryField "cats" cats <> pageCtx <> gctx
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
                     >>= renderTpl "tpl/wfvh.html" ctx
 

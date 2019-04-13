@@ -3,6 +3,7 @@
 	--link-color: #234b7e;
 	--active-color: #633341;
 	--border-color: #0f0c37;
+	--light-blue: hsl(205, 21%, 69%);
 }
 
 *,
@@ -132,6 +133,11 @@ figure > img {
 
 .aono.segment section > p {
 	text-indent: 2em;
+}
+
+.aono.article .header .post.date {
+	font-family: "方正楷体简体";
+	color: var(--light-blue);
 }
 
 .aono.footer {
