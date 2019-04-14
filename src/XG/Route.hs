@@ -110,17 +110,6 @@ routeRule = do
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
                     >>= renderTpl "tpl/wfvh.html" ctx
 
-        -- 归档
-        create ["gvdh.html"] $ do
-            route idRoute
-            compile $ do
-                postAry <- recentFirst =<< loadAll postPattern
-                let ctx = mconcat [ listField "postAry" pageCtx $ return postAry
-                                  , constField "title" "文章归档"
-                                  , gctx
-                                  ]
-                renderFromEmpty "tpl/gvdh.html" ctx
-
         -- index route
         create ["index.html"] $ do
             route idRoute
