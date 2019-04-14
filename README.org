@@ -2,7 +2,7 @@
 
 ** 简介
 
-基本[[https://jaspervdj.be/hakyll/][Hakyll]]配置出来的静态博客程度。
+基本[[https://jaspervdj.be/hakyll/][Hakyll]]配置出来的静态博客程序。
 
 ** 特色
 
