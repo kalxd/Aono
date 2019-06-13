@@ -1,3 +1,4 @@
+
 name:               Aono
 version:            0.1.0.0
 build-type:         Simple
@@ -15,5 +16,5 @@ executable aono
                   , filepath == 1.4.*
   ghc-options:      -threaded
   default-language: Haskell2010
-  other-modules:    XG.Type
-                  , XG.Route
+  other-modules:    Aono.Type
+                  , Aono.Route

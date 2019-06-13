@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Hakyll
-import XG.Type
-import XG.Route
+import Aono.Type
+import Aono.Route
 
 main :: IO ()
 main = do

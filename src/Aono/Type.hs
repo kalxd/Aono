@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
-module XG.Type where
+module Aono.Type where
 
 import Hakyll.Core.Configuration
 import Hakyll.Core.Rules

@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module XG.Route where
+module Aono.Route where
 
 import Hakyll
 import Text.Pandoc.Options (WriterOptions(..))
@@ -13,7 +13,7 @@ import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Class (lift)
 import Control.Monad ((>=>), filterM)
 
-import XG.Type
+import Aono.Type
 
 type RouteEnv a = ReaderT SiteConfig IO a
 type RouteRule = RouteEnv (Rules ())
