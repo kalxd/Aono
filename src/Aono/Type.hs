@@ -7,6 +7,7 @@ import Hakyll.Core.Rules
 import Hakyll.Web.Feed
 import Data.Yaml
 import Data.Maybe
+import Data.Default
 
 data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , siteDesc :: Maybe String -- 网站描述
@@ -16,30 +17,33 @@ data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , sitePostDir :: FilePath -- 文章目录
                              } deriving (Show)
 
-defSiteConfig :: SiteConfig
-defSiteConfig = SiteConfig { siteTitle = "我的网站"
-                           , siteDesc = Nothing
-                           , siteHost = previewHost defaultConfiguration
-                           , sitePort = previewPort defaultConfiguration
-                           , siteSource = Nothing
-                           , sitePostDir = "posts"
-                           }
+instance Default SiteConfig where
+    def = SiteConfig { siteTitle = "我的网站"
+                     , siteDesc = Nothing
+                     , siteHost = previewHost defaultConfiguration
+                     , sitePort = previewPort defaultConfiguration
+                     , siteSource = Nothing
+                     , sitePostDir = "posts"
+                     }
 
 instance FromJSON SiteConfig where
     parseJSON = withObject "config" $ \v -> SiteConfig
-                                            <$> v .:? "title" .!= siteTitle defSiteConfig
+                                            <$> v .:? "title" .!= siteTitle def
                                             <*> v .:? "desc"
-                                            <*> v .:? "host" .!= siteHost defSiteConfig
-                                            <*> v .:? "port" .!= sitePort defSiteConfig
+                                            <*> v .:? "host" .!= siteHost def
+                                            <*> v .:? "port" .!= sitePort def
                                             <*> v .:? "source"
-                                            <*> v .:? "postdir" .!= sitePostDir defSiteConfig
+                                            <*> v .:? "postdir" .!= sitePostDir def
 
 loadConfig :: IO SiteConfig
 loadConfig = do
     c <- decodeFileEither "config.yml"
     case c of
-        Left _ -> return defSiteConfig
         Right a -> return a
+        Left _ -> do
+            putStrLn "读取配置失败，使用默认配置"
+            return def
+
 
 applyHakyllConfig :: SiteConfig -> Configuration
 applyHakyllConfig config = defaultConfiguration { previewHost = host
