@@ -3,7 +3,5 @@ _site/
 .stack-work/
 
 image/
-wfvh/
 
 config.yml
-sync.fish
