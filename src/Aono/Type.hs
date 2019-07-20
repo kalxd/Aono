@@ -36,7 +36,7 @@ instance FromJSON SiteConfig where
                                             <*> v .:? "port" .!= sitePort def
                                             <*> v .:? "source"
                                             <*> v .:? "postdir" .!= sitePostDir def
-                                            <*> v .:? "ouput" .!= siteOutput def
+                                            <*> v .:? "output" .!= siteOutput def
 
 loadConfig :: IO SiteConfig
 loadConfig = do
@@ -51,9 +51,11 @@ loadConfig = do
 applyHakyllConfig :: SiteConfig -> Configuration
 applyHakyllConfig config = defaultConfiguration { previewHost = host
                                                 , previewPort = port
+                                                , destinationDirectory = output
                                                 }
     where host = siteHost config
           port = sitePort config
+          output = siteOutput config
 
 feedConfig :: SiteConfig -> FeedConfiguration
 feedConfig SiteConfig{..} = FeedConfiguration { feedTitle = siteTitle
