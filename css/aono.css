@@ -83,6 +83,13 @@ figure > img {
 	max-width: 100%;
 }
 
+/** 代码 */
+pre {
+	padding: 1em;
+	background-color: #232629;
+	color: #cfcfc2;
+}
+
 .aono.main.container {
 	width: 1024px;
 	margin-left: auto;
@@ -133,6 +140,10 @@ figure > img {
 
 .aono.segment section > p {
 	text-indent: 2em;
+}
+
+.aono.article {
+	line-height: 1.4em;
 }
 
 .aono.article .header .post.date {
