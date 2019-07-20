@@ -132,6 +132,7 @@ pre {
 	padding: 1em;
 	margin-top: 2em;
 	text-shadow: 0 0 1px hsla(244, 78%, 21%, .2);
+	line-height: 1.4em;
 }
 
 .aono.segment .right.header {
@@ -140,10 +141,6 @@ pre {
 
 .aono.segment section > p {
 	text-indent: 2em;
-}
-
-.aono.article {
-	line-height: 1.4em;
 }
 
 .aono.article .header .post.date {
