@@ -15,6 +15,7 @@ data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
                              , sitePort :: Int -- 开发端口
                              , siteSource :: Maybe String -- 网站源码地址
                              , sitePostDir :: FilePath -- 文章目录
+                             , siteOutput :: FilePath -- 最终页面输出目录
                              } deriving (Show)
 
 instance Default SiteConfig where
@@ -24,6 +25,7 @@ instance Default SiteConfig where
                      , sitePort = previewPort defaultConfiguration
                      , siteSource = Nothing
                      , sitePostDir = "posts"
+                     , siteOutput = destinationDirectory defaultConfiguration
                      }
 
 instance FromJSON SiteConfig where
@@ -34,6 +36,7 @@ instance FromJSON SiteConfig where
                                             <*> v .:? "port" .!= sitePort def
                                             <*> v .:? "source"
                                             <*> v .:? "postdir" .!= sitePostDir def
+                                            <*> v .:? "ouput" .!= siteOutput def
 
 loadConfig :: IO SiteConfig
 loadConfig = do
