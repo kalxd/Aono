@@ -4,6 +4,10 @@
 	--active-color: #633341;
 	--border-color: #0f0c37;
 	--light-blue: hsl(205, 21%, 69%);
+	--han-font-family: "方正屏显雅宋_GBK";
+	--han-kai-ti: "方正楷体简体";
+	--han-hei-ti: "方正黑体简体";
+	--mono-font-family: "Fantasque Sans Mono";
 }
 
 *,
@@ -15,7 +19,7 @@
 body {
 	background-color: #f4fefd;
 	color: var(--normal-font-color);
-	font-family: "方正书宋_GBK";
+	font-family: var(--han-font-family);
 }
 
 /* 链接 */
@@ -63,12 +67,12 @@ blockquote {
 
 /* 粗体 */
 strong {
-	font-family: "方正黑体简体";
+	font-family: var(--han-hei-ti);
 }
 
 /* 所谓的斜体 */
 em {
-	font-family: "方正楷体简体";
+	font-family: var(--han-kai-ti);
 	font-style: normal;
 	text-decoration: underline;
 }
@@ -88,6 +92,10 @@ pre {
 	padding: 1em;
 	background-color: #232629;
 	color: #cfcfc2;
+}
+
+pre > code {
+	font-family: var(--mono-font-family);
 }
 
 .aono.main.container {
@@ -144,7 +152,7 @@ pre {
 }
 
 .aono.article .header .post.date {
-	font-family: "方正楷体简体";
+	font-family: var(--han-kai-ti);
 	color: var(--light-blue);
 }
 
@@ -152,7 +160,7 @@ pre {
 	color: hsl(345, 52%, 43%);
 	border-radius: 4px;
 	border: 1px solid var(--border-color);
-	font-family: "Fantasque Sans Mono";
+	font-family: var(--mono-font-family);
 	padding-left: .5em;
 	padding-right: .5em;
 }
