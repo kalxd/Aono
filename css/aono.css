@@ -1,9 +1,9 @@
 :root {
+	--primary-color: #4089f0;
 	--normal-font-color: #08002a;
-	--link-color: #234b7e;
-	--active-color: #633341;
-	--border-color: #0f0c37;
-	--light-blue: hsl(205, 21%, 69%);
+	--link-color: #4089f0;
+	--active-color: #326bbb;
+	--border-color: #326bbb;
 	--han-font-family: "方正屏显雅宋_GBK";
 	--han-kai-ti: "方正楷体简体";
 	--han-hei-ti: "方正黑体简体";
@@ -17,7 +17,7 @@
 }
 
 body {
-	background-color: #f4fefd;
+	background-color: #f1f1f1;
 	color: var(--normal-font-color);
 	font-family: var(--han-font-family);
 }
@@ -104,9 +104,14 @@ pre > code {
 	margin-right: auto;
 }
 
+.aono.site.header > h1 {
+	color: var(--primary-color);
+	text-shadow: 1px 1px 1px #326bbb;
+}
+
 .aono.navi.menu {
-	border-width: 2px 4px;
-	border-color: var(--board-color);
+	border-width: 2px 6px;
+	border-color: var(--border-color);
 	border-style: solid double;
 	display: flex;
 }
@@ -135,7 +140,7 @@ pre > code {
 
 .aono.segment {
 	border-style: solid double;
-	border-width: 2px 4px;
+	border-width: 2px 6px;
 	border-color: var(--border-color);
 	padding: 1em;
 	margin-top: 2em;
@@ -143,7 +148,11 @@ pre > code {
 	line-height: 1.4em;
 }
 
-.aono.segment .right.header {
+.aono.segment .header {
+	margin-bottom: 4rem;
+}
+
+.aono.segment .right.cat {
 	float: right;
 }
 
@@ -153,7 +162,7 @@ pre > code {
 
 .aono.article .header .post.date {
 	font-family: var(--han-kai-ti);
-	color: var(--light-blue);
+	font-weight: normal;
 }
 
 .aono.article p code {
