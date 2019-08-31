@@ -31,8 +31,8 @@
 
 # 截图
 
-[!火狐截图](./screenshot/firefox-shot.png)
-[!w3m截图](./screenshot/w3m-shot.png)
+![火狐截图](./screenshot/firefox-shot.png)
+![w3m截图](./screenshot/w3m-shot.png)
 
 # 协议
 
