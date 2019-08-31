@@ -1,25 +1,23 @@
-* AONO
+# AONO
 
-** 简介
+基于[Hakyll](https://jaspervdj.be/hakyll/)配置出来的静态博客应用。
 
-基于[[https://jaspervdj.be/hakyll/][Hakyll]]配置出来的静态博客应用。
+# 特色
 
-** 特色
-
-+ 支持[[https://pandoc.org/][pandoc]]语法。
++ 支持[pandoc](https://pandoc.org/)语法。
 + 提供ATOM格式订阅。
 + 无任何javascript，终端友好。
 
-** 安装使用
+# 安装使用
 
-1. 安装[[https://docs.haskellstack.org/en/stable/README/][stack。]]
-2. 下载或 =git clone= 代码库。
-3. =stack build= 。
-4. 生成可执行文件 =aono= ，具体用法跟[[https://jaspervdj.be/hakyll/tutorials/01-installation.html][Hakyll教程一致]]。
+1. 安装[stack](https://docs.haskellstack.org/en/stable/README/)。
+2. 下载或`git clone`代码库。
+3. `stack build`。
+4. 生成可执行文件`aono`，具体用法跟[Hakyll教程一致](https://jaspervdj.be/hakyll/tutorials/01-installation.html)。
 5. config.sample.yml复制或改名成config.yml。
 6. 更改配置（可选）。
 
-** 配置说明
+# 配置说明
 
 | 字段    | 说明               | 可选 | 默认值       |
 |---------+--------------------+------+--------------|
@@ -31,13 +29,12 @@
 | postdir | 文章目录           | 是   | posts        |
 | output  | 网页输出目录       | 是   | Hakyll默认值 |
 
-** 截图
+# 截图
 
-[[file:screenshot/firefox-shot.png][火狐截图]]
+[!火狐截图](./screenshot/firefox-shot.png)
+[!w3m截图](./screenshot/w3m-shot.png)
 
-[[file:screenshot/w3m-shot.png][w3m截图]]
-
-** 协议
+# 协议
 
 + 程序代码使用GPL v3协议发布。
-+ css声明了[[http://www.foundertype.com/][方正]]字体，为了显示正常，需要去单独安装它们字体。
++ css声明了[方正](http://www.foundertype.com/)字体，为了显示正常，需要去单独安装它们字体。
