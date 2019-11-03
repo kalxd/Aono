@@ -26,7 +26,6 @@
 | host    | 主机地址           | 是   | Hakyll默认值 |
 | port    | 主机端口           | 是   | Hakyll默认值 |
 | source  | 网站源码地址       | 是   |              |
-| postdir | 文章目录           | 是   | posts        |
 | output  | 网页输出目录       | 是   | Hakyll默认值 |
 
 # 截图

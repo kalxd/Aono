@@ -35,7 +35,7 @@ instance FromJSON SiteConfig where
                                             <*> v .:? "host" .!= siteHost def
                                             <*> v .:? "port" .!= sitePort def
                                             <*> v .:? "source"
-                                            <*> v .:? "postdir" .!= sitePostDir def
+                                            <*> (pure $ sitePostDir def)
                                             <*> v .:? "output" .!= siteOutput def
 
 loadConfig :: IO SiteConfig
