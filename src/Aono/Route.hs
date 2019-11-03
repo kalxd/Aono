@@ -82,8 +82,23 @@ routeRule = do
         -- css route
         match "css/*" $ route idRoute >> compile compressCssCompiler
 
+        -- 标签分类
+        tags <- buildTags postPattern $ fromCapture "标签/*.html"
         -- 猫类
         cats <- buildCategories postPattern $ fromCapture "猫/*.html"
+
+        -- 生成标签页
+        tagsRules tags $ \tag p -> do
+            route idRoute
+            compile $ do
+                postAry <- recentFirst =<< loadAll p
+                let ctx = mconcat [ listField "postAry" pageCtx $ return postAry
+                                  , constField "title" $ "标签：" <> tag
+                                  , gctx
+                                  ]
+                renderFromEmpty "tpl/bnqm.html" ctx
+
+        -- 生成标签页
         tagsRules cats $ \cat p -> do
             route idRoute
             compile $ do
@@ -106,7 +121,7 @@ routeRule = do
                                                              , writerTemplate = Just tocTpl
                                                              }
                         Nothing -> defaultHakyllWriterOptions
-                let ctx = categoryField "cats" cats <> pageCtx <> gctx
+                let ctx = tagsField "tags" tags <> pageCtx <> gctx
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
                     >>= renderTpl "tpl/wfvh.html" ctx
 
