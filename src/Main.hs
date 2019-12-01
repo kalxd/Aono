@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 import Hakyll
 import Aono.Type
 import Aono.Route
