@@ -66,6 +66,14 @@ pageCtx = mconcat [ dateField "date" "%Y年%m月%d日"
                   , defaultContext
                   ]
 
+-- | 如何分页
+pageGroup :: MonadMetadata m => [Identifier] -> m [[Identifier]]
+pageGroup = fmap (paginateEvery 20) . sortRecentFirst
+
+-- | 分页地址
+pageLink :: PageNumber -> Identifier
+pageLink n = fromFilePath $ "page/" <> show n <> "/index.html"
+
 routeRule :: RouteRule
 routeRule = do
     postDir <- asks sitePostDir
@@ -135,6 +143,20 @@ routeRule = do
                                   , gctx
                                   ]
                 renderFromEmpty "tpl/index.html" ctx
+
+        -- 分页
+        page <- buildPaginateWith pageGroup postPattern pageLink
+        paginateRules page $ \pageNum pat -> do
+            route idRoute
+            compile $ do
+                postAry <- recentFirst =<< loadAll pat
+                let ctx = mconcat [ listField "postAry" pageCtx $ pure postAry
+                                  , constField "title" $ "第" <> show pageNum <> "页"
+                                  , paginateContext page pageNum
+                                  , gctx
+                                  ]
+
+                renderFromEmpty "tpl/ffye.html" ctx
 
         -- rss
         create ["atom.xml"] $ do
