@@ -8,7 +8,7 @@ import System.FilePath.Posix ((</>))
 
 import Text.Read (readMaybe)
 import Data.Monoid ((<>))
-import Data.List (sort)
+import Data.List (sort, take)
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Class (lift)
 import Control.Monad ((>=>), filterM)
@@ -133,19 +133,22 @@ routeRule = do
                 pandocCompilerWith defaultHakyllReaderOptions writeSet
                     >>= renderTpl "tpl/wfvh.html" ctx
 
-        -- index route
+
+        -- 分页
+        page <- buildPaginateWith pageGroup postPattern pageLink
+
+        -- 首页
         create ["index.html"] $ do
             route idRoute
             compile $ do
-                postAry <- recentFirst =<< loadAll postPattern
+                postAry <- fmap (take 20) $ recentFirst =<< loadAll postPattern
                 let ctx = mconcat [ listField "postAry" pageCtx (return postAry)
                                   , constField "title" "首页"
+                                  , paginateContext page 1
                                   , gctx
                                   ]
                 renderFromEmpty "tpl/index.html" ctx
 
-        -- 分页
-        page <- buildPaginateWith pageGroup postPattern pageLink
         paginateRules page $ \pageNum pat -> do
             route idRoute
             compile $ do
@@ -155,7 +158,6 @@ routeRule = do
                                   , paginateContext page pageNum
                                   , gctx
                                   ]
-
                 renderFromEmpty "tpl/ffye.html" ctx
 
         -- rss
