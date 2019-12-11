@@ -7,4 +7,20 @@
 	  $endfor$
 	</ol>
   </section>
+
+  <footer>
+	<ul class="aono pagination">
+	  $if(previousPageNum)$
+	  <li><a href="$previousPageUrl$">上一页</a></li>
+	  $endif$
+
+	  $for(allPages)$
+	  <li><a href="$url$">$num$</a></li>
+	  $endfor$
+
+	  $if(nextPageNum)$
+	  <li><a href="$nextPageUrl$">下一页</a></li>
+	  $endif$
+	</ul>
+  </footer>
 </article>

@@ -158,7 +158,7 @@ routeRule = do
                                   , paginateContext page pageNum
                                   , gctx
                                   ]
-                renderFromEmpty "tpl/ffye.html" ctx
+                renderFromEmpty "tpl/index.html" ctx
 
         -- rss
         create ["atom.xml"] $ do
