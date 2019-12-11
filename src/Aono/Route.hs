@@ -171,6 +171,5 @@ routeRule = do
         -- template
         match "tpl/*" $ compile templateCompiler
 
-
 runRoute :: SiteConfig -> IO (Rules ())
 runRoute = runReaderT routeRule
