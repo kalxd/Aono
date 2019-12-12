@@ -148,12 +148,12 @@ pre > code {
 	line-height: 1.4em;
 }
 
-.aono.segment .right.cat {
-	float: right;
-}
-
 .aono.segment section > p {
 	text-indent: 2em;
+}
+
+.aono.main.section footer {
+	text-align: center;
 }
 
 .aono.article .header .post.date {
@@ -173,4 +173,13 @@ pre > code {
 .aono.footer {
 	text-align: center;
 	margin-top: 2em;
+}
+
+.aono.pagination {
+}
+.aono.pagination > li {
+	display: inline;
+	border-bottom: 1px solid var(--border-color);
+	margin-left: 6px;
+	margin-right: 6px;
 }

@@ -122,7 +122,7 @@ routeRule = do
             route $ setExtension "html"
             compile $ do
                 toc <- flip getMetadataField "toc" =<< getUnderlying
-                let tocTpl = "<div class=\"toc\">目录：$toc$</div><hr>$body$"
+                let tocTpl = "<div class=\"toc\">目录：$toc$</div>$body$"
                 let writeSet = case toc >>= readMaybe :: Maybe Int of
                         Just n -> defaultHakyllWriterOptions { writerTableOfContents = True
                                                              , writerTOCDepth = n

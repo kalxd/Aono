@@ -1,5 +1,6 @@
 <article class="aono main section">
   <header class="header">近期博文</header>
+  <hr>
   <section>
 	<ol>
 	  $for(postAry)$
@@ -7,20 +8,16 @@
 	  $endfor$
 	</ol>
   </section>
-
+  <hr>
   <footer>
+	当前在
+	<em>$currentPageNum$</em>
+	页
+
 	<ul class="aono pagination">
-	  $if(previousPageNum)$
-	  <li><a href="$previousPageUrl$">上一页</a></li>
-	  $endif$
-
 	  $for(allPages)$
-	  <li><a href="$url$">$num$</a></li>
+	  <li><a href="$url$">第$num$页</option>
 	  $endfor$
-
-	  $if(nextPageNum)$
-	  <li><a href="$nextPageUrl$">下一页</a></li>
-	  $endif$
 	</ul>
   </footer>
 </article>
