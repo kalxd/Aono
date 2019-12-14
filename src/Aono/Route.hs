@@ -66,8 +66,8 @@ pageCtx = mconcat [ dateField "date" "%Y年%m月%d日"
                   ]
 
 -- | 如何分页
-pageGroup :: MonadMetadata m => [Identifier] -> m [[Identifier]]
-pageGroup = fmap (paginateEvery 20) . sortRecentFirst
+pageGroup :: MonadMetadata m => Int -> [Identifier] -> m [[Identifier]]
+pageGroup pageSize = fmap (paginateEvery pageSize) . sortRecentFirst
 
 -- | 分页地址
 pageLink :: PageNumber -> Identifier
@@ -133,13 +133,13 @@ routeRule = do
 
 
         -- 分页
-        page <- buildPaginateWith pageGroup postPattern pageLink
+        page <- buildPaginateWith (pageGroup sitePageSize) postPattern pageLink
 
         -- 首页
         create ["index.html"] $ do
             route idRoute
             compile $ do
-                postAry <- fmap (take 20) $ recentFirst =<< loadAll postPattern
+                postAry <- fmap (take sitePageSize) $ recentFirst =<< loadAll postPattern
                 let ctx = mconcat [ listField "postAry" pageCtx (return postAry)
                                   , constField "title" "首页"
                                   , paginateContext page 1
