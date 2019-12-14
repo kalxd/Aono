@@ -10,6 +10,7 @@ import System.FilePath.Posix ((</>))
 import Text.Read (readMaybe)
 import Data.Monoid ((<>))
 import Data.List (sort, take)
+import Data.Maybe (maybe)
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Class (lift)
 import Control.Monad ((>=>), filterM)
@@ -38,11 +39,12 @@ emptyItem = makeItem ""
 -- | 模板需要用到的全部变量都在这里
 globalCtx :: RouteEnv (Context String)
 globalCtx = do
-    config <- ask
+    SiteConfig{..} <- ask
     dirs <- readMenu
 
-    return $ mconcat [ constField "siteTitle" $ siteTitle config
+    return $ mconcat [ constField "siteTitle" siteTitle
                      , listField "menu" defaultContext $ toListItem dirs
+                     , maybe mempty (constField "siteDesc") $ siteDesc
                      , defaultContext
                      ]
 
