@@ -20,10 +20,8 @@ type RouteRule = RouteEnv (Rules ())
 
 -- | 路径转化成列表
 toListItem :: [String] -> Compiler [Item String]
-toListItem xs = return $ do
-    x <- xs
-    let p = fromFilePath x
-    return $ Item p x
+toListItem = pure . map f
+    where f x = Item (fromFilePath x) x
 
 -- | 读取菜单路径
 readMenu :: RouteEnv [String]
