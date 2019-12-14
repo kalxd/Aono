@@ -141,7 +141,7 @@ routeRule = do
             compile $ do
                 postAry <- fmap (take sitePageSize) $ recentFirst =<< loadAll postPattern
                 let ctx = mconcat [ listField "postAry" pageCtx (return postAry)
-                                  , constField "title" "首页"
+                                  , constField "title" siteTitle
                                   , paginateContext page 1
                                   , gctx
                                   ]
@@ -151,8 +151,9 @@ routeRule = do
             route idRoute
             compile $ do
                 postAry <- recentFirst =<< loadAll pat
+                let title = siteTitle <> " - " <> "第" <> show pageNum <> "页"
                 let ctx = mconcat [ listField "postAry" pageCtx $ pure postAry
-                                  , constField "title" $ "第" <> show pageNum <> "页"
+                                  , constField "title" title
                                   , paginateContext page pageNum
                                   , gctx
                                   ]
@@ -163,7 +164,7 @@ routeRule = do
             route idRoute
             compile $ do
                 let ctx = gctx <> bodyField "description"
-                posts <- fmap (take 10) . recentFirst =<< loadAll postPattern
+                posts <- fmap (take sitePageSize) . recentFirst =<< loadAll postPattern
                 renderAtom rssConfig ctx posts
 
         -- template
