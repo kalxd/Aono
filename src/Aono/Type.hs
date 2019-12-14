@@ -9,13 +9,14 @@ import Data.Yaml
 import Data.Maybe
 import Data.Default
 
-data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题
-                             , siteDesc :: Maybe String -- 网站描述
-                             , siteHost :: String -- 开发地址
-                             , sitePort :: Int -- 开发端口
-                             , siteSource :: Maybe String -- 网站源码地址
-                             , sitePostDir :: FilePath -- 文章目录
-                             , siteOutput :: FilePath -- 最终页面输出目录
+data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题。
+                             , siteDesc :: Maybe String -- 网站描述。
+                             , siteHost :: String -- 开发地址。
+                             , sitePort :: Int -- 开发端口。
+                             , siteSource :: Maybe String -- 网站源码地址。
+                             , sitePostDir :: FilePath -- 文章目录。
+                             , siteOutput :: FilePath -- 最终页面输出目录。
+                             , sitePageSize :: Int -- 分页，每页多少文章。
                              } deriving (Show)
 
 instance Default SiteConfig where
@@ -26,6 +27,7 @@ instance Default SiteConfig where
                      , siteSource = Nothing
                      , sitePostDir = "posts"
                      , siteOutput = destinationDirectory defaultConfiguration
+                     , sitePageSize = 23
                      }
 
 instance FromJSON SiteConfig where
@@ -37,6 +39,7 @@ instance FromJSON SiteConfig where
                                             <*> v .:? "source"
                                             <*> (pure $ sitePostDir def)
                                             <*> v .:? "output" .!= siteOutput def
+                                            <*> v .:? "pageSize" .!= sitePageSize def
 
 loadConfig :: IO SiteConfig
 loadConfig = do
