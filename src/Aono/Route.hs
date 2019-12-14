@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 module Aono.Route where
 
 import Hakyll
@@ -74,13 +75,12 @@ pageLink n = fromFilePath $ "page/" <> show n <> "/index.html"
 
 routeRule :: RouteRule
 routeRule = do
-    postDir <- asks sitePostDir
-    title <- asks siteTitle
     rssConfig <- asks feedConfig
+    SiteConfig{..} <- ask
 
     gctx <- globalCtx
 
-    let postPattern = fromGlob $ postDir <> "/**"
+    let postPattern = fromGlob $ sitePostDir <> "/**"
     return $ do
         -- image route
         match "image/**" $ route idRoute >> compile copyFileCompiler
