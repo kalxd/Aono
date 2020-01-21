@@ -176,6 +176,7 @@ pre > code {
 }
 
 .aono.pagination {
+	padding-left: 0;
 }
 .aono.pagination > li {
 	display: inline;
