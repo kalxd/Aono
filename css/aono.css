@@ -104,7 +104,8 @@ pre > code {
 	margin-right: auto;
 }
 
-.aono.site.header > h1 {
+.aono.site.header {
+	font-size: 2em;
 	color: var(--primary-color);
 	text-shadow: 1px 1px 1px #326bbb;
 }
