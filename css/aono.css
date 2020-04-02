@@ -108,6 +108,7 @@ pre > code {
 	font-size: 2em;
 	color: var(--primary-color);
 	text-shadow: 1px 1px 1px #326bbb;
+	margin-bottom: 1rem;
 }
 
 .aono.navi.menu {
