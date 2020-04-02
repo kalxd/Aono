@@ -168,8 +168,8 @@ pre > code {
 	border-radius: 4px;
 	border: 1px solid var(--border-color);
 	font-family: var(--mono-font-family);
-	padding-left: .5em;
-	padding-right: .5em;
+	padding: .1em .5em;
+	margin: auto .1em;
 }
 
 .aono.footer {
