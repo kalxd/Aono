@@ -136,7 +136,6 @@ pre > code {
 }
 
 .aono.navi.menu > .right.item {
-	self-align: right;
 	margin-left: auto;
 }
 
@@ -185,4 +184,29 @@ pre > code {
 	border-bottom: 1px solid var(--border-color);
 	margin-left: 6px;
 	margin-right: 6px;
+}
+
+/** 手机适配 */
+@media (max-width: 740px) {
+	.aono.main.container {
+		width: 100%;
+	}
+
+	.aono.site.header > small {
+		display: block;
+		text-align: right;
+	}
+
+	.aono.navi.menu,
+	.aono.navi.menu ul {
+		flex-direction: column;
+	}
+
+	.aono.navi.menu ul .item {
+		text-align: center;
+	}
+
+	.aono.navi.menu > .right.item {
+		margin-right: auto;
+	}
 }
