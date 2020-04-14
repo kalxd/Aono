@@ -163,9 +163,9 @@ pre > code {
 }
 
 .aono.article p code {
-	color: hsl(345, 52%, 43%);
-	border-radius: 4px;
-	border: 1px solid var(--border-color);
+	--the-color: hsl(345, 52%, 43%);
+	color: var(--the-color);
+	border-bottom: 1px solid var(--the-color);
 	font-family: var(--mono-font-family);
 	padding: .1em .5em;
 	margin: auto .1em;
