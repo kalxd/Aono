@@ -1,6 +1,6 @@
 # AONO #
 
-基于[Hakyll](https://jaspervdj.be/hakyll/)配置出来的静态博客。
+[Hakyll](https://jaspervdj.be/hakyll/)静态淡色博客主题。
 
 # 特色 #
 
@@ -31,10 +31,9 @@
 
 # 截图 #
 
-![火狐截图](./screenshot/firefox-shot.png)
-![w3m截图](./screenshot/w3m-shot.png)
-
-**截图稍微过时，但这不重要。**
+![桌面浏览器截图](./screenshot/pc-shot.png)
+![移动浏览器截图](./screenshot/mobile-shot.png)
+![终端浏览器截图](./screenshot/terminal-shot.png)
 
 # 协议 #
 
