@@ -4,8 +4,6 @@ module Aono.Route where
 
 import Hakyll
 import Text.Pandoc.Options (WriterOptions(..))
-import System.Directory (listDirectory, doesDirectoryExist)
-import System.FilePath.Posix ((</>))
 
 import Text.Read (readMaybe)
 import Data.Monoid ((<>))
@@ -25,13 +23,6 @@ toListItem :: [String] -> Compiler [Item String]
 toListItem = pure . map f
     where f x = Item (fromFilePath x) x
 
--- | 读取菜单路径
-readMenu :: RouteEnv [String]
-readMenu = do
-    dirPath <- asks sitePostDir
-    dirs <- lift $ sort <$> listDirectory dirPath
-    filterM (lift . doesDirectoryExist . (dirPath </>)) dirs
-
 -- | 空元素
 emptyItem :: Compiler (Item String)
 emptyItem = makeItem ""
@@ -40,10 +31,8 @@ emptyItem = makeItem ""
 globalCtx :: RouteEnv (Context String)
 globalCtx = do
     SiteConfig{..} <- ask
-    dirs <- readMenu
 
     return $ mconcat [ constField "siteTitle" siteTitle
-                     , listField "menu" defaultContext $ toListItem dirs
                      , maybe mempty (constField "siteDesc") $ siteDesc
                      , defaultContext
                      ]

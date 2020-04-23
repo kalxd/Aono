@@ -1,6 +1,6 @@
 
 name:               Aono
-version:            1.2.0
+version:            2.0.0
 build-type:         Simple
 cabal-version:      >= 1.10
 
@@ -10,7 +10,6 @@ executable aono
   build-depends:    base == 4.*
                   , hakyll
                   , pandoc
-                  , directory
                   , transformers
                   , yaml
                   , filepath
