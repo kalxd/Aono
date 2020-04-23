@@ -64,11 +64,14 @@ pageGroup pageSize = fmap (paginateEvery pageSize) . sortRecentFirst
 pageLink :: PageNumber -> Identifier
 pageLink n = fromFilePath $ "page/" <> show n <> "/index.html"
 
+-- 标签云渲染方式
+renderCloud :: Tags -> Compiler String
+renderCloud = renderTagCloud 100 500
+
 routeRule :: RouteRule
 routeRule = do
     rssConfig <- asks feedConfig
     SiteConfig{..} <- ask
-
     gctx <- globalCtx
 
     let postPattern = fromGlob $ sitePostDir <> "/**"
@@ -125,6 +128,28 @@ routeRule = do
 
         -- 分页
         page <- buildPaginateWith (pageGroup sitePageSize) postPattern pageLink
+
+        -- 所有猫
+        create ["猫.html"] $ do
+            route idRoute
+            compile $ do
+                catCloud <- renderCloud cats
+                let ctx = mconcat [ constField "html" catCloud
+                                  , constField "title" "猫云"
+                                  , gctx
+                                  ]
+                renderFromEmpty "tpl/yy.html" ctx
+
+        -- 所有标签
+        create ["标签.html"] $ do
+            route idRoute
+            compile $ do
+                tagCloud <- renderCloud tags
+                let ctx = mconcat [ constField "html" tagCloud
+                                  , constField "title" "标签云"
+                                  , gctx
+                                  ]
+                renderFromEmpty "tpl/yy.html" ctx
 
         -- 首页
         create ["index.html"] $ do
