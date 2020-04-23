@@ -1,6 +1,6 @@
 # AONO #
 
-[Hakyll](https://jaspervdj.be/hakyll/)静态淡色博客主题。
+[Hakyll](https://jaspervdj.be/hakyll/)静态博客淡色主题。
 
 # 特色 #
 
