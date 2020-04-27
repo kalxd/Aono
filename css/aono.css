@@ -186,6 +186,107 @@ pre > code {
 	margin-right: 6px;
 }
 
+/** 扩展类 */
+.提示,
+.提示！,
+.注意,
+.注意！,
+
+.定理,
+.定理！,
+.定义,
+.定义！,
+.命题,
+.命题！,
+.结论,
+.结论！ {
+	position: relative;
+	padding: .2rem 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.提示！::before,
+.注意！::before,
+
+.定理！::before,
+.定义！::before,
+.命题！::before,
+.结论！::before {
+	position: absolute;
+	top: -.8rem;
+	left: 2rem;
+	padding: .2rem 1rem;
+	border-radius: 4px;
+	color: white;
+	font-family: var(--han-hei-ti);
+}
+
+.提示,
+.提示！ {
+	background-color: #B9F6CA;
+	border-color: #00C853;
+}
+.提示！::before {
+	content: "提示";
+	background-color: #00C853;
+}
+
+.注意,
+.注意！ {
+	background-color: #FFCDD2;
+	border-color: #D50000;
+}
+.注意！::before {
+	content: "注意";
+	background-color: #D50000;
+}
+
+.定义,
+.定义！ {
+	border-color: hsl(122, 56%, 68%);
+	background-color: #BCAAA4;
+	border-color: #3E2723;
+
+}
+.定义！::before {
+	content: "定义";
+	background-color: #3E2723;
+}
+
+.定理,
+.定理！ {
+	background-color: #F8BBD0;
+	border-color: #880E4F;
+}
+.定理！::before {
+	content: "定理";
+	background-color: #880E4F;
+}
+
+.命题,
+.命题！ {
+	background-color: #BBDEFB;
+	border-color: #0D47A1;
+}
+.命题！::before {
+	content: "命题";
+	background-color: #0D47A1;
+}
+
+.结论,
+.结论！ {
+	background-color: #B2EBF2;
+	border-color: #006064;
+}
+.结论！::before {
+	content: "结论";
+	background-color: #006064;
+}
+/** 结束 */
+
 /** 手机适配 */
 @media (max-width: 740px) {
 	.aono.main.container {
