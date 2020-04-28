@@ -167,7 +167,6 @@ pre > code {
 	color: var(--the-color);
 	border-bottom: 1px solid var(--the-color);
 	font-family: var(--mono-font-family);
-	padding: .1em .5em;
 	margin: auto .1em;
 }
 
