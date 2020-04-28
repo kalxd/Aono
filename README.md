@@ -2,6 +2,8 @@
 
 [Hakyll](https://jaspervdj.be/hakyll/)静态博客淡色主题。
 
+[预览及详细说明](https://kalxd.github.io/posts/2020-04-28-guide.html)。
+
 # 特色 #
 
 + 支持[pandoc](https://pandoc.org/)语法。
