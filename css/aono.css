@@ -284,6 +284,16 @@ pre > code {
 	content: "结论";
 	background-color: #006064;
 }
+
+.多列 {
+	display: flex;
+}
+
+.多列 .左,
+.多列 .中,
+.多列 .右{
+	flex: auto;
+}
 /** 结束 */
 
 /** 手机适配 */
