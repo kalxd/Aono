@@ -319,4 +319,8 @@ pre > code {
 	.aono.navi.menu > .right.item {
 		margin-right: auto;
 	}
+
+	.多列 {
+		display: block;
+	}
 }
