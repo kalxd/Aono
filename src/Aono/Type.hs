@@ -25,7 +25,7 @@ instance Default SiteConfig where
                      , siteHost = previewHost defaultConfiguration
                      , sitePort = previewPort defaultConfiguration
                      , siteSource = Nothing
-                     , sitePostDir = "posts"
+                     , sitePostDir = "文章"
                      , siteOutput = destinationDirectory defaultConfiguration
                      , sitePageSize = 23
                      }
