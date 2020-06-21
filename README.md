@@ -17,6 +17,7 @@
 3. `stack build`。
 4. 生成可执行文件`aono`，具体用法跟[Hakyll教程一致](https://jaspervdj.be/hakyll/tutorials/01-installation.html)。
 5. 填写配置（可选），在根目录新建config.yml，每一项都有默认值，只填写需要项即可。
+6. 在项目根目录创建`文章/`，Aono将会读取此处所有文章。
 
 # 配置说明 #
 
