@@ -68,6 +68,8 @@ blockquote {
 /* 粗体 */
 strong {
 	font-family: var(--han-hei-ti);
+	text-emphasis-position: under;
+	text-emphasis-style: dot;
 }
 
 /* 所谓的斜体 */
