@@ -287,15 +287,37 @@ pre > code {
 	background-color: #006064;
 }
 
-.多列 {
+.两栏,
+.三栏 {
 	display: flex;
 }
 
-.多列 .左,
-.多列 .中,
-.多列 .右{
-	flex: auto;
+.两栏 > .列 {
+	flex-basis: 50%;
 }
+
+.两栏 > .列:first-child {
+	padding-right: .5rem;
+}
+
+.两栏 > .列:last-child {
+	padding-left: .5rem;
+}
+
+.三栏 > .列 {
+	flex-basis: 33.3%;
+	padding-left: .5rem;
+	padding-right: .5rem;
+}
+
+.三栏 > .列:first-child {
+	padding-left: 0;
+}
+
+.三栏 > .列:last-child {
+	padding-right: 0;
+}
+
 /** 结束 */
 
 /** 手机适配 */
