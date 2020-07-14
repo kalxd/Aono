@@ -187,6 +187,18 @@ pre > code {
 	margin-right: 6px;
 }
 
+/** 数学公式 */
+.math em {
+	font-family: initial;
+	text-decoration: initial;
+}
+
+.math.display {
+	display: block;
+	text-align: center;
+}
+/** 结束 */
+
 /** 扩展类 */
 .提示,
 .提示！,
