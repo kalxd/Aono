@@ -356,7 +356,18 @@ pre > code {
 		margin-right: auto;
 	}
 
-	.多列 {
+	.两栏,
+	.三栏 {
 		display: block;
+	}
+
+	.两栏 > .列,
+	.两栏 > .列:first-child,
+	.两栏 > .列:last-child,
+	.三栏 > .列,
+	.三栏 > .列:first-child,
+	.三栏 > .列:last-child {
+		padding-left: 0;
+		padding-right: 0;
 	}
 }
