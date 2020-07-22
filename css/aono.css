@@ -219,6 +219,7 @@ pre > code {
 	margin-bottom: 1rem;
 	border-width: 2px;
 	border-style: solid;
+	text-indent: 2rem;
 }
 
 .提示！::before,
@@ -235,6 +236,7 @@ pre > code {
 	border-radius: 4px;
 	color: white;
 	font-family: var(--han-hei-ti);
+	text-indent: 0;
 }
 
 .提示,
