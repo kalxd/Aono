@@ -222,6 +222,23 @@ pre > code {
 	text-indent: 2rem;
 }
 
+.提示 pre,
+.提示！ pre,
+.注意 pre,
+.注意！ pre,
+
+.定理 pre,
+.定理！ pre,
+.定义 pre,
+.定义！ pre,
+.命题 pre,
+.命题！ pre,
+.结论 pre,
+.结论！pre {
+	text-indent: 0;
+}
+
+
 .提示！::before,
 .注意！::before,
 
