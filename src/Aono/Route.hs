@@ -18,11 +18,6 @@ import Aono.Type
 type RouteEnv a = ReaderT SiteConfig IO a
 type RouteRule = RouteEnv (Rules ())
 
--- | 路径转化成列表
-toListItem :: [String] -> Compiler [Item String]
-toListItem = pure . map f
-    where f x = Item (fromFilePath x) x
-
 -- | 空元素
 emptyItem :: Compiler (Item String)
 emptyItem = makeItem ""
