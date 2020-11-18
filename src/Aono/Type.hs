@@ -5,8 +5,9 @@ module Aono.Type where
 import Hakyll.Core.Configuration
 import Hakyll.Core.Rules
 import Hakyll.Web.Feed
+
 import Data.Yaml
-import Data.Maybe
+import Data.Maybe (fromMaybe)
 
 data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题。
                              , siteDesc :: Maybe String -- 网站描述。
