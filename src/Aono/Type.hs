@@ -7,7 +7,6 @@ import Hakyll.Core.Rules
 import Hakyll.Web.Feed
 import Data.Yaml
 import Data.Maybe
-import Data.Default
 
 data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题。
                              , siteDesc :: Maybe String -- 网站描述。
@@ -19,27 +18,28 @@ data SiteConfig = SiteConfig { siteTitle :: String -- 网站标题。
                              , sitePageSize :: Int -- 分页，每页多少文章。
                              } deriving (Show)
 
-instance Default SiteConfig where
-    def = SiteConfig { siteTitle = "我的网站"
-                     , siteDesc = Nothing
-                     , siteHost = previewHost defaultConfiguration
-                     , sitePort = previewPort defaultConfiguration
-                     , siteSource = Nothing
-                     , sitePostDir = "文章"
-                     , siteOutput = destinationDirectory defaultConfiguration
-                     , sitePageSize = 23
-                     }
+defSiteConfig :: SiteConfig
+defSiteConfig = SiteConfig { siteTitle = "我的网站"
+                           , siteDesc = Nothing
+                           , siteHost = previewHost defaultConfiguration
+                           , sitePort = previewPort defaultConfiguration
+                           , siteSource = Nothing
+                           , sitePostDir = "文章"
+                           , siteOutput = destinationDirectory defaultConfiguration
+                           , sitePageSize = 23
+                           }
+
 
 instance FromJSON SiteConfig where
     parseJSON = withObject "config" $ \v -> SiteConfig
-                                            <$> v .:? "title" .!= siteTitle def
+                                            <$> v .:? "title" .!= siteTitle defSiteConfig
                                             <*> v .:? "desc"
-                                            <*> v .:? "host" .!= siteHost def
-                                            <*> v .:? "port" .!= sitePort def
+                                            <*> v .:? "host" .!= siteHost defSiteConfig
+                                            <*> v .:? "port" .!= sitePort defSiteConfig
                                             <*> v .:? "source"
-                                            <*> (pure $ sitePostDir def)
-                                            <*> v .:? "output" .!= siteOutput def
-                                            <*> v .:? "pageSize" .!= sitePageSize def
+                                            <*> (pure $ sitePostDir defSiteConfig)
+                                            <*> v .:? "output" .!= siteOutput defSiteConfig
+                                            <*> v .:? "pageSize" .!= sitePageSize defSiteConfig
 
 loadConfig :: IO SiteConfig
 loadConfig = do
@@ -48,7 +48,7 @@ loadConfig = do
         Right a -> return a
         Left _ -> do
             putStrLn "读取配置失败，使用默认配置"
-            return def
+            pure defSiteConfig
 
 
 applyHakyllConfig :: SiteConfig -> Configuration
