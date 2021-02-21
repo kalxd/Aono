@@ -1,8 +1,7 @@
-import Hakyll
-import Aono.Type
-import Aono.Route
+import Aono.Option.App (runAppWith, readAppConfig)
+import Aono.Route (runRoute)
 
 main :: IO ()
 main = do
-    config <- loadConfig
-    hakyllWith (applyHakyllConfig config) $ runRoute config
+    config <- readAppConfig
+    runAppWith config $ runRoute config

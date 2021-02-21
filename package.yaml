@@ -1,0 +1,25 @@
+name: Aono
+version: "2.3.0"
+github: "kalxd/Aono"
+license: GPL-3
+author: "XG.Ley"
+
+extra-source-files:
+  - README.md
+
+description: "Hakyll淡色主题。"
+
+dependencies:
+  - base >= 4.7 && < 5
+  - hakyll
+  - yaml
+  - pandoc
+
+executables:
+  aono:
+    main: Main.hs
+    source-dirs: src
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N

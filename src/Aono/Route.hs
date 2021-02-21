@@ -8,18 +8,19 @@ import Text.Pandoc.Options (WriterOptions(..))
 import Text.Read (readMaybe)
 import Control.Monad ((>=>))
 
-import Aono.Type
+import Aono.Option.App (AppConfig(..))
+import Aono.Option.Feed (buildFeedFrom)
 
 -- | 空元素
 emptyItem :: Compiler (Item String)
 emptyItem = makeItem ""
 
 -- | 模板需要用到的全部变量都在这里
-globalCtx :: SiteConfig -> (Context String)
-globalCtx SiteConfig{..} = mconcat [ constField "siteTitle" siteTitle
-                                   , maybe mempty (constField "siteDesc") $ siteDesc
-                                   , defaultContext
-                                   ]
+globalCtx :: AppConfig -> (Context String)
+globalCtx AppConfig{..} = mconcat [ constField "siteTitle" siteTitle
+                                  , maybe mempty (constField "siteDesc") $ siteDesc
+                                  , defaultContext
+                                  ]
 
 -- | 载入模板
 applyLayout :: Context a -> Item a -> Compiler (Item String)
@@ -52,8 +53,8 @@ pageLink n = fromFilePath $ "page/" <> show n <> "/index.html"
 renderCloud :: Tags -> Compiler String
 renderCloud = renderTagCloud 100 500
 
-runRoute :: SiteConfig -> Rules ()
-runRoute config@SiteConfig{..} = do
+runRoute :: AppConfig -> Rules ()
+runRoute config@AppConfig{..} = do
     let gctx =  globalCtx config
         postPattern = fromGlob $ sitePostDir <> "/**"
 
@@ -162,7 +163,7 @@ runRoute config@SiteConfig{..} = do
         compile $ do
             let ctx = gctx <> bodyField "description"
             posts <- fmap (take sitePageSize) . recentFirst =<< loadAll postPattern
-            renderAtom (feedConfig config) ctx posts
+            renderAtom (buildFeedFrom config) ctx posts
 
     -- template
     match "tpl/*" $ compile templateCompiler
