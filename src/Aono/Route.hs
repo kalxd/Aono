@@ -6,9 +6,6 @@ import Hakyll
 import Text.Pandoc.Options (WriterOptions(..))
 
 import Text.Read (readMaybe)
-import Data.Monoid ((<>))
-import Data.List (take)
-import Data.Maybe (maybe)
 import Control.Monad ((>=>))
 
 import Aono.Type
@@ -44,7 +41,7 @@ pageCtx = mconcat [ dateField "date" "%Y年%m月%d日"
                   ]
 
 -- | 如何分页
-pageGroup :: MonadMetadata m => Int -> [Identifier] -> m [[Identifier]]
+pageGroup :: (MonadMetadata m, MonadFail m) => Int -> [Identifier] -> m [[Identifier]]
 pageGroup pageSize = fmap (paginateEvery pageSize) . sortRecentFirst
 
 -- | 分页地址
@@ -98,11 +95,12 @@ runRoute config@SiteConfig{..} = do
         route $ setExtension "html"
         compile $ do
             toc <- flip getMetadataField "toc" =<< getUnderlying
-            let tocTpl = "<div class=\"toc\">目录：$toc$</div>$body$"
+            -- let tocTpl = "<div class=\"toc\">目录：$toc$</div>$body$"
             let writeSet = case toc >>= readMaybe :: Maybe Int of
                     Just n -> defaultHakyllWriterOptions { writerTableOfContents = True
                                                          , writerTOCDepth = n
-                                                         , writerTemplate = Just tocTpl
+                                                         -- , writerTemplate = Just tocTpl
+                                                         , writerTemplate = Nothing
                                                          }
                     Nothing -> defaultHakyllWriterOptions
             let ctx = tagsField "tags" tags <> pageCtx <> gctx
