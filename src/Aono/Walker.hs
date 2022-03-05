@@ -5,27 +5,28 @@ module Aono.Walker ( FileInfo(..)
                    ) where
 
 import RIO
-import RIO.Time (UTCTime)
+import RIO.Time (ZonedTime (zonedTimeToLocalTime), utcToZonedTime, utcToLocalZonedTime, LocalTime)
 import RIO.Directory (listDirectory, getModificationTime, doesFileExist, doesDirectoryExist)
 import RIO.FilePath (takeFileName, (</>))
 import RIO.Text (pack)
 import RIO.List (sort)
 
-type LastModfiedTime = UTCTime
-
 data FileInfo = FileInfo { fileTitle :: Text
-                         , fileTime :: UTCTime
+                         , fileTime :: ZonedTime
                          , filePath :: FilePath
                          }
                 deriving (Show)
 
 newtype FileItem = FileItem FileInfo
 
+fileInfoLocalTime :: FileInfo -> LocalTime
+fileInfoLocalTime (FileInfo _ time _) = zonedTimeToLocalTime time
+
 instance Eq FileItem where
-    (FileItem f1) ==  (FileItem f2) = fileTime f1 == fileTime f2
+    (FileItem f1) ==  (FileItem f2) = fileInfoLocalTime f1 == fileInfoLocalTime f2
 
 instance Ord FileItem where
-    compare (FileItem f1) (FileItem f2) = compare (fileTime f1) (fileTime f2)
+    compare (FileItem f1) (FileItem f2) = compare (fileInfoLocalTime f1) (fileInfoLocalTime f2)
 
 -- | 分别读取目录中的文件、目录，其它一概忽略
 readDirAndFile :: FilePath -> IO ([FilePath], [FilePath])
@@ -38,7 +39,7 @@ readDirAndFile path = do
 -- | 读取文件的必要信息
 readFileItem :: FilePath -> IO FileItem
 readFileItem filepath = do
-    time <- getModificationTime filepath
+    time <- utcToLocalZonedTime =<< getModificationTime filepath
     let filename = takeFileName filepath
     pure $ FileItem $ FileInfo (pack filename) time filepath
 
