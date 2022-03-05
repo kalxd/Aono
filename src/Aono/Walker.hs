@@ -31,8 +31,8 @@ instance Ord FileItem where
 readDirAndFile :: FilePath -> IO ([FilePath], [FilePath])
 readDirAndFile path = do
     xs <- listDirectory path
-    fs <- filterM doesFileExist xs
-    ds <- filterM doesDirectoryExist xs
+    fs <- filterM doesFileExist $ map (path </>) xs
+    ds <- filterM doesDirectoryExist $ map (path </>) xs
     pure (fs, ds)
 
 -- | 读取文件的必要信息
@@ -47,12 +47,12 @@ workDirDeeply :: FilePath -> IO [FileItem]
 workDirDeeply dirpath = do
     (fs, ds) <- readDirAndFile dirpath
     fs' <- mapM readFileItem fs
-    fss' <- concat <$> mapM (workDirDeeply . (dirpath </>)) ds
+    fss' <- concat <$> mapM workDirDeeply ds
     pure $ fs' ++ fss'
 
 -- | 从目录中读出排过序的文件。
 readSortFileList :: FilePath -> IO [FileInfo]
 readSortFileList path = do
-    fs <- sort <$> workDirDeeply path
+    fs <- reverse . sort <$> workDirDeeply path
     let unwrap (FileItem info) = info
     pure $ map unwrap fs
