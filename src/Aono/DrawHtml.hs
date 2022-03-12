@@ -7,13 +7,12 @@ module Aono.DrawHtml (runHTML) where
 
 import RIO
 import Aono.Walker (FileInfo, readSortFileList)
-import Aono.ArgOpt (ArgOpt (ArgOpt), runArgOpt)
+import Aono.ArgOpt (ArgOpt (..))
 import RIO.FilePath (takeDirectory, hasTrailingPathSeparator, (</>))
 import Text.Hamlet (shamletFile)
 import Text.Blaze.Renderer.Text (renderMarkup)
 import Text.Blaze (Markup)
 import Data.Text.Lazy.IO (writeFile)
-import Prelude (putStrLn)
 
 data AonoEnv = AonoEnv { aonoRootPath :: FilePath
                        , aonoFileList :: [FileInfo]
