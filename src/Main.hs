@@ -1,11 +1,8 @@
 module Main where
 
-import Aono.ArgOpt (runArgOpt, ArgOpt (ArgOpt))
-import Aono.Walker (readSortFileList)
-import Control.Monad (forM_)
+import Aono.ArgOpt (runArgOpt)
+import Control.Monad (void)
+import Aono.DrawHtml (runHTML)
 
 main :: IO ()
-main = do
-    ArgOpt path <- runArgOpt
-    fs <- readSortFileList path
-    forM_ fs print
+main = void $ runHTML =<< runArgOpt
