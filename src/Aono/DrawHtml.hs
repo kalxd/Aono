@@ -28,7 +28,7 @@ saveMarkup :: FilePath -> Markup -> IO ()
 saveMarkup filepath = writeFile filepath . renderMarkup
 
 saveCSS :: FilePath -> IO ()
-saveCSS filepath = writeFile filepath $ renderCss ($(luciusFile "./html/aono.css") undefined)
+saveCSS filepath = writeFile filepath $ renderCss $ $(luciusFile "./html/aono.css") undefined
 
 -- | 整个主流程。
 runHTML :: ArgOpt -> IO ()
