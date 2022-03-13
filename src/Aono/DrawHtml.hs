@@ -13,6 +13,7 @@ import Text.Hamlet (shamletFile)
 import Text.Blaze.Renderer.Text (renderMarkup)
 import Text.Blaze (Markup)
 import Data.Text.Lazy.IO (writeFile)
+import Text.Lucius (luciusFile, renderCss)
 
 data AonoEnv = AonoEnv { aonoRootPath :: FilePath
                        , aonoFileList :: [FileInfo]
@@ -26,8 +27,12 @@ makeEnv path = AonoEnv (moveUp path) <$> readSortFileList path
 saveMarkup :: FilePath -> Markup -> IO ()
 saveMarkup filepath = writeFile filepath . renderMarkup
 
+saveCSS :: FilePath -> IO ()
+saveCSS filepath = writeFile filepath $ renderCss ($(luciusFile "./html/aono.css") undefined)
+
 -- | 整个主流程。
 runHTML :: ArgOpt -> IO ()
 runHTML (ArgOpt sourcePath) = do
     AonoEnv {..} <- makeEnv sourcePath
+    saveCSS (aonoRootPath </> "aono.css")
     saveMarkup (aonoRootPath </> "index.html") $(shamletFile "./html/index.html")
