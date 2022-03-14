@@ -6,7 +6,7 @@
 module Aono.DrawHtml (runHTML) where
 
 import RIO
-import Aono.Walker (FileInfo, readSortFileList)
+import Aono.Walker (FileInfo(..), readSortFileList)
 import Aono.ArgOpt (ArgOpt (..))
 import RIO.FilePath (takeDirectory, hasTrailingPathSeparator, (</>))
 import Text.Hamlet (shamletFile)
