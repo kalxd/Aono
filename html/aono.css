@@ -1,3 +1,28 @@
+:root {
+	--水蓝: #D2F0F4;
+	--藏青: #2E4E7E;
+	--黛蓝: #425066;
+	--苍黑: #395260;
+}
+
 body {
-	background-color: cyan;
+	background-color: var(--水蓝);
+	font-family: "方正聚珍新仿简繁";
+	color: var(--苍黑);
+}
+
+body > main {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title {
+	text-align: center;
+	color: var(--藏青);
+	text-shadow: 1px 1px var(--黛蓝);
+}
+
+footer {
+	text-align: center;
 }

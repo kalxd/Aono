@@ -2,9 +2,22 @@ $doctype 5
 <html>
     <head>
         <meta charset="utf-8">
-        <title>hello world
+        <title>鄙野清舍
+        <link rel="stylesheet" href="./aono.css">
 
     <body>
-        <h1>hell other world
-        $forall info <- aonoFileList
-            <div>#{fileTitle info}
+        <main>
+            <h1 class="title">鄙野清舍
+                <small class="description">·百无一用是读书！
+            <nav class="navi">
+                <ol class="list">
+                    $forall info <- aonoFileList
+                        <li>
+                            <a href="#{makeRelative aonoRootPath $ filePath info}">
+                                #{fileTitle info}
+                                <small>修改日期：#{show $ fileTime info}
+
+        <footer>
+            本笔记目录由
+            <a href="https://github.com/kalxd/Aono">Aono
+            驱动生成
