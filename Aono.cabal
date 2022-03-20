@@ -25,7 +25,10 @@ version:            0.1.0.0
 -- category:
 extra-source-files: CHANGELOG.md
 
-executable Aono
+extra-source-files: html/*.html
+                  , html/*.css
+
+executable aono
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
@@ -42,4 +45,5 @@ executable Aono
                     , blaze-markup == 0.8.2.8
                     , shakespeare == 2.0.25
     hs-source-dirs:   src
+
     default-language: Haskell2010
