@@ -23,6 +23,12 @@ body > main {
 	text-shadow: 1px 1px var(--黛蓝);
 }
 
+.navi .list {
+	width: 100%;
+	writing-mode: vertical-rl;
+	list-style: cjk-decimal;
+}
+
 footer {
 	text-align: center;
 }
