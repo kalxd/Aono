@@ -10,6 +10,7 @@ import RIO.Directory (listDirectory, getModificationTime, doesFileExist, doesDir
 import RIO.FilePath (takeFileName, (</>))
 import RIO.Text (pack)
 import RIO.List (sort)
+import System.IO (print)
 
 data FileInfo = FileInfo { fileTitle :: Text
                          , fileTime :: ZonedTime
@@ -39,6 +40,7 @@ readDirAndFile path = do
 -- | 读取文件的必要信息
 readFileItem :: FilePath -> IO FileItem
 readFileItem filepath = do
+    print filepath
     time <- utcToLocalZonedTime =<< getModificationTime filepath
     let filename = takeFileName filepath
     pure $ FileItem $ FileInfo (pack filename) time filepath
