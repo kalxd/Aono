@@ -8,7 +8,7 @@ module Aono.DrawHtml (runHTML) where
 import RIO
 import Aono.Walker (FileInfo(..), readSortFileList)
 import Aono.ArgOpt (ArgOpt (..))
-import RIO.FilePath (takeDirectory, hasTrailingPathSeparator, (</>), makeRelative)
+import RIO.FilePath (takeDirectory, hasTrailingPathSeparator, (</>), makeRelative, dropTrailingPathSeparator)
 import Text.Hamlet (shamletFile)
 import Text.Blaze.Renderer.Text (renderMarkup)
 import Text.Blaze (Markup)
@@ -22,9 +22,9 @@ data AonoEnv = AonoEnv { aonoRootPath :: FilePath
                        }
 
 makeEnv :: FilePath -> IO AonoEnv
-makeEnv path = AonoEnv (moveUp path) <$> readSortFileList path
-    where moveUp path | hasTrailingPathSeparator path = takeDirectory $ takeDirectory path
-                      | otherwise = takeDirectory path
+makeEnv path = AonoEnv parent <$> readSortFileList path
+    where path' = dropTrailingPathSeparator $ dropTrailingPathSeparator path
+          parent = takeDirectory path'
 
 saveMarkup :: FilePath -> Markup -> IO ()
 saveMarkup filepath = writeFile filepath . renderMarkup
