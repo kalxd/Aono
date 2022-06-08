@@ -4,7 +4,7 @@ module Aono.NetPath where
 
 import RIO
 import Data.List (intercalate, dropWhileEnd)
-import RIO.FilePath (splitPath, pathSeparator)
+import RIO.FilePath (splitPath, pathSeparator, joinPath, (</>))
 
 newtype NetPath = NetPath { runNetPath :: [String] }
     deriving (Show)
@@ -20,3 +20,6 @@ pathToNetPath = NetPath . map (dropWhileEnd (== pathSeparator)) . splitPath
 
 joinNetPath :: NetPath -> FilePath
 joinNetPath (NetPath p) = intercalate "/" p
+
+pathJoinNetPath :: FilePath -> NetPath -> FilePath
+pathJoinNetPath path (NetPath netpath) = path </> joinPath netpath

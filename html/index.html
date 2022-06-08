@@ -13,7 +13,7 @@ $doctype 5
                 <ol class="list">
                     $forall info <- aonoFileList
                         <li>
-                            <a href="#{makeRelative aonoRootPath $ filePath info}">
+                            <a href="#{joinNetPath $ filePath info}">
                                 #{fileTitle info}
                                 <small>修改日期：#{show $ fileTime info}
 

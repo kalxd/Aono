@@ -10,52 +10,48 @@ import RIO.Directory (listDirectory, getModificationTime, doesFileExist, doesDir
 import RIO.FilePath (takeFileName, (</>))
 import RIO.Text (pack)
 import RIO.List (sort)
-import System.IO (print)
+import Aono.NetPath
 
 data FileInfo = FileInfo { fileTitle :: Text
                          , fileTime :: ZonedTime
-                         , filePath :: FilePath
+                         , filePath :: NetPath
                          }
                 deriving (Show)
-
-newtype FileItem = FileItem FileInfo
 
 fileInfoLocalTime :: FileInfo -> LocalTime
 fileInfoLocalTime (FileInfo _ time _) = zonedTimeToLocalTime time
 
-instance Eq FileItem where
-    (FileItem f1) ==  (FileItem f2) = fileInfoLocalTime f1 == fileInfoLocalTime f2
+instance Eq FileInfo where
+    (==) = on (==) fileInfoLocalTime
 
-instance Ord FileItem where
-    compare (FileItem f1) (FileItem f2) = compare (fileInfoLocalTime f1) (fileInfoLocalTime f2)
+instance Ord FileInfo where
+    compare = on compare fileInfoLocalTime
 
 -- | 分别读取目录中的文件、目录，其它一概忽略
 readDirAndFile :: FilePath -> IO ([FilePath], [FilePath])
 readDirAndFile path = do
-    xs <- listDirectory path
-    fs <- filterM doesFileExist $ map (path </>) xs
-    ds <- filterM doesDirectoryExist $ map (path </>) xs
+    filenames <- listDirectory path
+    let fns = zip filenames $ map (path </>) filenames
+    fs <- map fst <$> filterM (doesFileExist . snd) fns
+    ds <- map fst <$> filterM (doesDirectoryExist .snd) fns
     pure (fs, ds)
 
 -- | 读取文件的必要信息
-readFileItem :: FilePath -> IO FileItem
-readFileItem filepath = do
-    print filepath
-    time <- utcToLocalZonedTime =<< getModificationTime filepath
-    let filename = takeFileName filepath
-    pure $ FileItem $ FileInfo (pack filename) time filepath
+readFileItem :: (FilePath, NetPath) -> IO FileInfo
+readFileItem (rootpath, filepath) = do
+    let fullpath = pathJoinNetPath rootpath filepath
+    time <- utcToLocalZonedTime =<< getModificationTime fullpath
+    let filename = takeFileName fullpath
+    pure $ FileInfo (pack filename) time filepath
 
 -- | 遍历整个目录
-workDirDeeply :: FilePath -> IO [FileItem]
-workDirDeeply dirpath = do
-    (fs, ds) <- readDirAndFile dirpath
-    fs' <- mapM readFileItem fs
-    fss' <- concat <$> mapM workDirDeeply ds
+workDirDeeply :: (FilePath, NetPath) -> IO [FileInfo]
+workDirDeeply (rootPath, relative) = do
+    (fs, ds) <- readDirAndFile $ pathJoinNetPath rootPath relative
+    fs' <- mapM (readFileItem . (,) rootPath .  (relative <>) . pathToNetPath) fs
+    fss' <- concat <$> mapM (\d -> workDirDeeply (rootPath, relative <> NetPath [d])) ds
     pure $ fs' ++ fss'
 
 -- | 从目录中读出排过序的文件。
-readSortFileList :: FilePath -> IO [FileInfo]
-readSortFileList path = do
-    fs <- reverse . sort <$> workDirDeeply path
-    let unwrap (FileItem info) = info
-    pure $ map unwrap fs
+readSortFileList :: (FilePath, NetPath) -> IO [FileInfo]
+readSortFileList x = reverse . sort <$> workDirDeeply x
