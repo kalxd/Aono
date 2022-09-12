@@ -9,6 +9,7 @@ import RIO
 import Aono.Walker (FileInfo(..), readSortFileList)
 import Aono.ArgOpt (ArgOpt (..))
 import RIO.FilePath (takeDirectory, (</>), makeRelative, dropTrailingPathSeparator)
+import RIO.Time (ZonedTime(..), formatTime, defaultTimeLocale)
 import Text.Hamlet (shamletFile)
 import Text.Blaze.Renderer.Text (renderMarkup)
 import Text.Blaze (Markup)
@@ -22,6 +23,10 @@ type UriPath = String;
 data AonoEnv = AonoEnv { aonoRootPath :: FilePath
                        , aonoFileList :: [FileInfo]
                        }
+
+formatZonedTime :: ZonedTime -> String
+formatZonedTime = formatTime defaultTimeLocale fmt
+    where fmt = "%Y年%m月%d日%H时%M分%S秒"
 
 makeEnv :: FilePath -> IO AonoEnv
 makeEnv path = AonoEnv parent <$> readSortFileList (parent, NetPath [relative])

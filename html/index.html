@@ -13,11 +13,13 @@ $doctype 5
                 <ol class="list">
                     $forall info <- aonoFileList
                         <li>
-                            <a href="#{joinNetPath $ filePath info}">
+                            <a class="title" href="#{joinNetPath $ filePath info}">
                                 #{fileTitle info}
-                                <small>修改日期：#{show $ fileTime info}
+                            <small class="date">修改日期：#{formatZonedTime $ fileTime info}
 
         <footer>
-            本笔记目录由
+            兰心独向
             <a href="https://github.com/kalxd/Aono">Aono
-            驱动生成
+            展，
+            <br>
+            待那春风化雨，无限风光尽可收。

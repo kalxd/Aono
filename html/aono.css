@@ -29,6 +29,10 @@ body > main {
 	list-style: cjk-decimal;
 }
 
+.navi .list .date {
+	display: block;
+}
+
 footer {
 	text-align: center;
 }
