@@ -1,6 +1,6 @@
-cabal-version:      3.4
+cabal-version:      3.8
 name:               Aono
-version:            0.3.2
+version:            0.3.3
 
 -- A short (one-line) description of the package.
 -- synopsis:
