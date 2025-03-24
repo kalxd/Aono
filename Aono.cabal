@@ -43,6 +43,7 @@ executable aono
                     , optparse-applicative == 0.18.1.0
                     , text == 2.1.2
                     , rio == 0.1.22.0
+                    , filepath == 1.5.4.0
                     , blaze-markup == 0.8.3.0
                     , shakespeare == 2.1.1
     hs-source-dirs:   src
