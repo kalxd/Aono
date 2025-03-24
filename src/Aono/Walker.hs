@@ -10,7 +10,7 @@ import RIO.Directory (listDirectory, getModificationTime, doesFileExist, doesDir
 import RIO.FilePath (takeFileName, (</>))
 import RIO.Text (pack)
 import RIO.List (sort)
-import Aono.NetPath
+import Aono.NetPath (NetPath(..), pathJoinNetPath, pathToNetPath)
 
 data FileInfo = FileInfo { fileTitle :: Text
                          , fileTime :: ZonedTime
