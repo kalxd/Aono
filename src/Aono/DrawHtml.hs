@@ -8,7 +8,7 @@ module Aono.DrawHtml (runHTML) where
 import RIO
 import Aono.Walker (FileInfo(..), readSortFileList)
 import Aono.ArgOpt (ArgOpt (..))
-import RIO.FilePath (takeDirectory, (</>), makeRelative, dropTrailingPathSeparator)
+import System.FilePath (takeDirectory, (</>), makeRelative, dropTrailingPathSeparator)
 import RIO.Time (ZonedTime(..), formatTime, defaultTimeLocale)
 import Text.Hamlet (shamletFile)
 import Text.Blaze.Renderer.Text (renderMarkup)
