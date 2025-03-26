@@ -1,16 +1,15 @@
--- |工作目录漫步者
-{-# LANGUAGE NoImplicitPrelude #-}
 module Aono.Walker ( FileInfo(..)
                    , readSortFileList
                    ) where
 
-import RIO
-import RIO.Time (ZonedTime (zonedTimeToLocalTime), utcToZonedTime, utcToLocalZonedTime, LocalTime)
-import RIO.Directory (listDirectory, getModificationTime, doesFileExist, doesDirectoryExist)
-import RIO.FilePath (takeFileName, (</>))
-import RIO.Text (pack)
-import RIO.List (sort)
+import Data.Time (ZonedTime (zonedTimeToLocalTime), utcToZonedTime, utcToLocalZonedTime, LocalTime)
+import System.Directory (listDirectory, getModificationTime, doesFileExist, doesDirectoryExist)
+import System.FilePath (takeFileName, (</>))
+import Data.List (sort)
 import Aono.NetPath (NetPath(..), pathJoinNetPath, pathToNetPath)
+import Data.Text (Text, pack)
+import Data.Function (on)
+import Control.Monad (filterM)
 
 data FileInfo = FileInfo { fileTitle :: Text
                          , fileTime :: ZonedTime

@@ -1,19 +1,17 @@
 -- | 最后一步，画出整张网页。
 
-{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE RecordWildCards #-}
 module Aono.DrawHtml (runHTML) where
 
-import RIO
 import Aono.Walker (FileInfo(..), readSortFileList)
 import Aono.ArgOpt (ArgOpt (..))
 import System.FilePath (takeDirectory, (</>), makeRelative, dropTrailingPathSeparator)
-import RIO.Time (ZonedTime(..), formatTime, defaultTimeLocale)
+import Data.Time (ZonedTime(..), formatTime, defaultTimeLocale)
 import Text.Hamlet (shamletFile)
 import Text.Blaze.Renderer.Text (renderMarkup)
 import Text.Blaze (Markup)
-import Data.Text.Lazy.IO (writeFile)
+import qualified Data.Text.Lazy.IO as TIO (writeFile)
 import Text.Lucius (luciusFile, renderCss)
 
 import Aono.NetPath (NetPath(NetPath), joinNetPath)
@@ -35,10 +33,10 @@ makeEnv path = AonoEnv parent <$> readSortFileList (parent, NetPath [relative])
           relative = makeRelative parent path'
 
 saveMarkup :: FilePath -> Markup -> IO ()
-saveMarkup filepath = writeFile filepath . renderMarkup
+saveMarkup filepath = TIO.writeFile filepath . renderMarkup
 
 saveCSS :: FilePath -> IO ()
-saveCSS filepath = writeFile filepath $ renderCss $ $(luciusFile "./html/aono.css") undefined
+saveCSS filepath = TIO.writeFile filepath $ renderCss $ $(luciusFile "./html/aono.css") undefined
 
 -- | 整个主流程。
 runHTML :: ArgOpt -> IO ()
